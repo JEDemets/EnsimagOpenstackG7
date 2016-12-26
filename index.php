@@ -14,7 +14,7 @@ function sendHttpGet() {
     alert("Insert Valid Username")
   } else {
     //substitute with service call the location
-    location.href = "/id_service/receive_id.php" + "?userid=" + userid;
+    location.href = "/EnsimagOpenstackG7/index.php" + "?userid=" + userid;
   }
 
 }
@@ -45,7 +45,7 @@ if(!isset($_GET['userid'])){
   echo "<h2 align=center >Welcome/Bienvenue/Benvenuto User: " . $_GET['userid'] . "</h2>";
   //IDENTIFICATION service
   $user_id = $_GET['userid'];
-  identify(user_id);
+  identify($user_id);
   //STATUS service
   //BUTTON service
   //PICTURE service
