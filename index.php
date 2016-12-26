@@ -34,7 +34,7 @@ function sendHttpGet() {
 include("identification_service.php");
 include("status_service.php");
 include("button_service.php");
-include("picture_service.php")
+include("picture_service.php");
 
 
 if(!isset($_GET['userid'])){
@@ -44,7 +44,7 @@ if(!isset($_GET['userid'])){
   //RETRIEVE INFO FOR USER
   echo "<h2 align=center >Welcome/Bienvenue/Benvenuto User: " . $_GET['userid'] . "</h2>";
   //IDENTIFICATION service
-  user_id = $_GET['userid'];
+  $user_id = $_GET['userid'];
   identify(user_id);
   //STATUS service
   //BUTTON service
