@@ -14,7 +14,7 @@ function sendHttpGet() {
     alert("Insert Valid Username")
   } else {
     //substitute with service call the location
-    location.href = "/EnsimagOpenstackG7/index.php" + "?userid=" + userid;
+    location.href = location.href + "?userid=" + userid;
   }
 
 }
@@ -39,16 +39,24 @@ include("picture_service.php");
 
 if(!isset($_GET['userid'])){
   echo "<div align=center>Insert your id: <input type='text' name='fname' id = 'userid'></div><br>";
-  echo "<div align=center><button onclick='sendHttpGet()' type='button' align=center>I'm Lucky!</button></div>";
+  echo "<div align=center><button onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
 } else {
   //RETRIEVE INFO FOR USER
   echo "<h2 align=center >Welcome/Bienvenue/Benvenuto User: " . $_GET['userid'] . "</h2>";
+  echo "<hr>";
   //IDENTIFICATION service
   $user_id = $_GET['userid'];
   identify($user_id);
+  echo "<hr>";
   //STATUS service
+  $status = get_status($user_id);
+  echo "<hr>";
   //BUTTON service
+  display_button($status, $user_id);
+  echo "<hr>";
   //PICTURE service
+  display_picture($status, $user_id);
+  echo "<hr>";
 
 
 }
