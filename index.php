@@ -35,6 +35,7 @@ include("identification_service.php");
 include("status_service.php");
 include("button_service.php");
 include("picture_service.php");
+include("connect_script.php");
 
 
 if(!isset($_GET['userid'])){
@@ -42,20 +43,20 @@ if(!isset($_GET['userid'])){
   echo "<div align=center><button onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
 } else {
   //RETRIEVE INFO FOR USER
-  echo "<h2 align=center >Welcome/Bienvenue/Benvenuto User: " . $_GET['userid'] . "</h2>";
+  echo "<h4 align=center >Inserted id: " . $_GET['userid'] . "</h4>";
   echo "<hr>";
   //IDENTIFICATION service
   $user_id = $_GET['userid'];
-  identify($user_id);
+  $connection_status = connectDB();
+  identify($connection_status, $user_id);
   echo "<hr>";
   //STATUS service
-  $status = get_status($user_id);
-  echo "<hr>";
+  $status = get_status($connection_status, $user_id);
   //BUTTON service
-  display_button($status, $user_id);
+  display_button($connection_status, $status, $user_id);
   echo "<hr>";
   //PICTURE service
-  display_picture($status, $user_id);
+  display_picture($connection_status, $status, $user_id);
   echo "<hr>";
 
 

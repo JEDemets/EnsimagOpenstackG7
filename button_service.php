@@ -1,6 +1,6 @@
 <?php
 
-function display_button($status, $user_id)
+function display_button($connection_status, $status, $user_id)
 {
   //NEED TO CHANGE FUNCTION EXECUTED BY BUTTON
   if ($status==0)
