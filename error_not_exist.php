@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Database Error</title>
+<title>User Not Found</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
@@ -24,7 +24,7 @@ function returnHome() {
 <br><br>
 
 <header class="w3-container w3-red" align=center>
-  <h1>Error in Database Connection</h1>
+  <h1>Error User not Found</h1>
 </header>
 
 <hr>

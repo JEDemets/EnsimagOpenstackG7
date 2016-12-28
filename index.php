@@ -23,6 +23,19 @@ function sendHttpGet() {
 
 }
 
+function playTheGame(){
+  user_id = getUrlVars()['userid'];
+  location.href = "./assign_gift.php?userid=" + user_id;
+}
+
+function getUrlVars() {
+  var vars = {};
+  var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+    vars[key] = value;
+  });
+  return vars;
+}
+
 </script>
 
 </head>
@@ -43,8 +56,9 @@ include("connect_script.php");
 
 
 if(!isset($_GET['userid'])){
-  echo "<div align=center>Insert your id: <input type='text' name='fname' id = 'userid'></div><br>";
-  echo "<div align=center><button onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
+  echo "<div align=center>Insert your id: <input type='text' name='fname' id = 'userid' onkeydown = \"if (event.keyCode == 13)
+            document.getElementById('sendbutton').click()\" ></div><br>";
+  echo "<div align=center><button id='sendbutton' onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
 } else {
   //RETRIEVE INFO FOR USER
   echo "<h4 align=center >Inserted id: " . $_GET['userid'] . "</h4>";
