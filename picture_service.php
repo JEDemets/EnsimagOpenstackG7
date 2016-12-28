@@ -11,9 +11,7 @@ function display_picture($user_id)
   $result = mysqli_query($conn, $idimagequery);
 
 	if (!$result) {
-			//echo $namequery;
-      echo $idimagequery;
-			//header("location: ./error_db_page.php");
+			header("location: ./error_db_page.php");
   } else {
 		$row = mysqli_fetch_row($result);
     $id_image = $row[0];
