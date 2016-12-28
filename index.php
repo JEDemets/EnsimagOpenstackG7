@@ -8,10 +8,14 @@
 
 <script>
 
+function verifyintjs(value){
+  return (parseFloat(value) == parseInt(value)) && !isNaN(value);
+}
+
 function sendHttpGet() {
   userid = document.getElementById('userid').value;
-  if (userid == ""){
-    alert("Insert Valid Username")
+  if (verifyintjs(userid) == ""){
+    alert("Insert Valid User ID")
   } else {
     //substitute with service call the location
     location.href = location.href + "?userid=" + userid;
@@ -56,7 +60,12 @@ if(!isset($_GET['userid'])){
   display_button($connection_status, $status, $user_id);
   echo "<hr>";
   //PICTURE service
-  display_picture($connection_status, $status, $user_id);
+  if($status == true){
+    echo "<h3 align='center'>This is your gift: \r\n<h3>";
+    display_picture($user_id);
+  }else {
+    echo "<h3 align='center'>Play your game to display your gift<h3>";
+  }
   echo "<hr>";
 
 
