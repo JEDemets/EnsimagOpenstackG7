@@ -11,6 +11,13 @@ $user_id = $_GET['userid'];
 
 $connectionStatus = connectDB();
 
+if(!$connectionStatus){
+  echo "<h3 align='center'>Le query pour le service [ID] n'a pas marche pour l'instant, essayer plus tard </h3>";
+  exit;
+}
+
+mysqli_autocommit($connectionStatus, FALSE);
+
 $selectQuery = "SELECT name FROM users WHERE id=".$user_id;
 
 $result = mysqli_query($connectionStatus, $selectQuery);
@@ -31,17 +38,18 @@ if (!$result) {
   //header("location: ./error_db_page.php");
   echo "<h3 align='center'>Le query pour le service P n'a pas marche pour l'instant, essayer plus tard </h3>";
 
-} else {
-  if (!mysqli_commit($connectionStatus)){
-    //header("location: ./error_db_page.php");
-    echo "<h3 align='center'>Le query pour le service P n'a pas marche pour l'instant, essayer plus tard </h3>";
-  }else {
-    header("location: ./index.php?userid=".$user_id);
-  }
-
 }
 
 $connectionImage = connectImageDB();
+
+
+if (!$connectionImage){
+  echo "<h3 align='center'>Le query pour le service P n'a pas marche pour l'instant, essayer plus tard </h3>";
+  mysqli_rollback($connectionStatus);
+  exit;
+}
+
+mysqli_autocommit($connectionImage, false);
 
 $insertGiftQuery = "INSERT INTO assigned_gift VALUES ($id_gift, \"".$user_id."\")";
 
@@ -49,12 +57,17 @@ $result = mysqli_query($connectionImage, $insertGiftQuery);
 
 if (!$result) {
     echo "Le query pour le service P n'a pas marche pour l'instant, essaie plus tard";
+    mysqli_rollback($connectionStatus);
+    exit;
     //header("location: ./error_db_page.php");
 } else {
   if (!mysqli_commit($connectionImage)){
     echo "Le query pour le service P n'a pas marche pour l'instant, essaie plus tard ";
+    mysqli_rollback($connectionStatus);
+    exit;
     //header("location: ./error_db_page.php");
   }else {
+    mysqli_commit($connectionStatus);
     header("location: ./index.php?userid=".$user_id);
     exit;
   }
