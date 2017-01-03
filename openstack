@@ -1,0 +1,20 @@
+heat_template_version: 2013-05-23
+
+resources:
+  compute_instance: # You can name this whatever you prefer
+    type: "OS::Nova::Server"
+    properties:
+      flavor: m1.small
+      image: ubuntu1404 
+      name: test
+      networks:
+          - network: private_network_1
+      admin_pass: test
+      admin_user: test
+      user_data:
+	 wget https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip
+	 unzip application_structure.zip -d ~/app
+	 ~/app/main.sh
+		
+
+
