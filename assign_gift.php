@@ -3,7 +3,7 @@
 include("connect_imagedb_script.php");
 include("connect_script.php");
 
-$NUMBERGIFT = 3;
+$NUMBERGIFT = 2;
 
 $id_gift = rand(1, $NUMBERGIFT);
 
@@ -28,11 +28,13 @@ WHERE id=" . $user_id;
 $result = mysqli_query($connectionStatus, $updateStatusQuery);
 
 if (!$result) {
-    //echo $namequery;
-    header("location: ./error_db_page.php");
+  //header("location: ./error_db_page.php");
+  echo "<h3 align='center'>Le query pour le service P n'a pas marche pour l'instant, essayer plus tard </h3>";
+
 } else {
   if (!mysqli_commit($connectionStatus)){
-    header("location: ./error_db_page.php");
+    //header("location: ./error_db_page.php");
+    echo "<h3 align='center'>Le query pour le service P n'a pas marche pour l'instant, essayer plus tard </h3>";
   }else {
     header("location: ./index.php?userid=".$user_id);
   }
@@ -46,11 +48,12 @@ $insertGiftQuery = "INSERT INTO assigned_gift VALUES ($id_gift, \"".$user_id."\"
 $result = mysqli_query($connectionImage, $insertGiftQuery);
 
 if (!$result) {
-    //echo $namequery;
-    header("location: ./error_db_page.php");
+    echo "Le query pour le service P n'a pas marche pour l'instant, essaie plus tard";
+    //header("location: ./error_db_page.php");
 } else {
   if (!mysqli_commit($connectionImage)){
-    header("location: ./error_db_page.php");
+    echo "Le query pour le service P n'a pas marche pour l'instant, essaie plus tard ";
+    //header("location: ./error_db_page.php");
   }else {
     header("location: ./index.php?userid=".$user_id);
     exit;

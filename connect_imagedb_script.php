@@ -7,11 +7,11 @@ function connectImageDB(){
   $dbname = "openstackgift";
 
   // Create connection
-  $conn = mysqli_connect($servername, $username, $password, $dbname);
+  $conn = @mysqli_connect($servername, $username, $password, $dbname);
   // Check connection
   if (!$conn) {
-      //die("Connection failed: " . mysqli_connect_error());
-      header("location: ./error_db_page.php");
+      //header("location: ./error_db_page.php");
+      echo "<h3 align='center'>Le query pour le service P ne marche pas pour l'instant, essayer plus tard </h3>";
   } else {
     //echo "Connessione al DB avvenuta correttamente\n\n";
     return $conn;

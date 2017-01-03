@@ -50,7 +50,6 @@ function getUrlVars() {
 
 include("identification_service.php");
 include("status_service.php");
-include("button_service.php");
 include("picture_service.php");
 include("connect_script.php");
 
@@ -61,7 +60,7 @@ if(!isset($_GET['userid'])){
   echo "<div align=center><button id='sendbutton' onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
 } else {
   //RETRIEVE INFO FOR USER
-  echo "<h4 align=center >Inserted id: " . $_GET['userid'] . "</h4>";
+  echo "<p align=center >Inserted id: " . $_GET['userid'] . "<p>";
   echo "<hr>";
   //IDENTIFICATION service
   $user_id = $_GET['userid'];
@@ -71,7 +70,6 @@ if(!isset($_GET['userid'])){
   //STATUS service
   $status = get_status($connection_status, $user_id);
   //BUTTON service
-  display_button($connection_status, $status, $user_id);
   echo "<hr>";
   //PICTURE service
   if($status == true){
