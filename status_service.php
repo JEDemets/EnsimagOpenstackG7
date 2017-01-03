@@ -14,7 +14,7 @@ function get_status($connection_status, $user_id)
 
     if (!$result) {
   			//header("location: ./error_db_page.php");
-        echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
+        echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard.</h3>";
     } else {
   		$row = mysqli_fetch_row($result);
       if ($row[0]==""){

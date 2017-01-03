@@ -8,7 +8,7 @@ function display_picture($user_id)
 
   if (!$conn){
     //header("location: ./error_db_page.php");
-    echo "<h3 align='center'>Le service P ne marche pas pour l'instant, essayer plus tard </h3>";
+    echo "<h3 align='center'>Le service [P] ne marche pas pour l'instant, essayer plus tard </h3>";
   } else {
 
     $idimagequery = "SELECT image_id FROM assigned_gift WHERE user_id =" . $user_id;
@@ -17,7 +17,7 @@ function display_picture($user_id)
 
   	if (!$result) {
   			//header("location: ./error_db_page.php");
-        echo "<h3 align='center'>Le service P ne marche pas pour l'instant, essayer plus tard </h3>";
+        echo "<h3 align='center'>Le service [P] ne marche pas pour l'instant, essayer plus tard </h3>";
 
     } else {
   		$row = mysqli_fetch_row($result);
@@ -28,7 +28,7 @@ function display_picture($user_id)
 
       if (!$result) {
     		//header("location: ./error_db_page.php");
-        echo "<h3 align='center'>Le service P ne marche pas pour l'instant, essayer plus tard </h3>";
+        echo "<h3 align='center'>Le service [P] ne marche pas pour l'instant, essayer plus tard </h3>";
       } else {
     		$row = mysqli_fetch_row($result);
         echo "<div align='center' ><img src=" . $row[0] . "' alt='error'> </div>";

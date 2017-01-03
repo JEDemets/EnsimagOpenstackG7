@@ -72,11 +72,13 @@ if(!isset($_GET['userid'])){
   //BUTTON service
   echo "<hr>";
   //PICTURE service
-  if($status == true){
+  if($status === true){
     echo "<h3 align='center'>This is your gift: \r\n<h3>";
     display_picture($user_id);
-  }else {
+  }else if ($status === false) {
     echo "<h3 align='center'>Play your game to display your gift<h3>";
+  } else {
+    echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
   }
   echo "<hr>";
 
