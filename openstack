@@ -1,21 +1,54 @@
 heat_template_version: 2014-10-16
 
+parameters:
+  serveurI:
+     type: string
+     default: 127.0.0.1
+  serveurW:
+     type: string
+     default: 127.0.0.1
+  serveurS:
+     type: string
+     default: 127.0.0.1
+  serveurP:
+     type: string
+     default: 127.0.0.1
+
 resources:
   compute_instance: # You can name this whatever you prefer
     type: "OS::Nova::Server"
     properties:
       flavor: m1.small
       image: debian8 
-      name: test1
+      name: test2
       networks:
           - network: private_network_1
       key_name: id-rsa
-      user_data: |
-         #!/bin/bash 
-         wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
-         apt-get install unzip >> tmp/log
-         unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-         sh /tmp/app/EnsimagOpenstackG7-application_structure/main.sh >> tmp/log
-		
+      user_data:
+         str_replace:
+          template: |
+            #!/bin/bash 
+            wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
+            apt-get install unzip >> tmp/log
+            unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/host.sh $serveurI$ $serveurW$ $serveurS$ $serveurP$ >> tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/main.sh >> tmp/log
+          params:
+            $serveurI$: { get_param: serveurI }
+            $serveurW$: { get_param: serveurW }
+            $serveurS$: { get_param: serveurS }
+            $serveurP$: { get_param: serveurP }
 
+  ipfloat:
+    type: "OS::Neutron::FloatingIP"
+    properties:
+       floating_network_id: external-network
+  assoc:
+    type: "OS::Nova::FloatingIPAssociation"
+    properties:
+       floating_ip: {get_resource: ipfloat}
+       server_id: {get_resource: compute_instance}
 
+outputs:
+   instanceIP:
+      value: {get_attr: [ ipfloat, floating_ip_address ] }
