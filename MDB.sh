@@ -21,11 +21,13 @@ mysql -p
 
 #Modify folder
 sudo service mysqld stop
-cp -rap /var/lib/mysql /data/mysql
-chown mysql.mysql /data/mysql
+sudo mkdir /data
+sudo cp -rap /var/lib/mysql /data
+sudo chown mysql.mysql /data/mysql
+
 
 sudo -rm /etc/mysql/my.cnf
-cp -rap ./my.cnf  /etc/mysql/
+sudo cp -rap ./my.cnf  /etc/mysql/
 
 sudo service mysqld start
 exit
