@@ -1,0 +1,31 @@
+heat_template_version: 2014-10-16
+
+resources:
+  compute_instance:
+    type: "OS::Nova::Server"
+    properties:
+      flavor: m1.small
+      image: ubuntu1404 
+      name: serveurI
+      networks:
+          - network: private_network_1
+      key_name: id-rsa
+      user_data: |
+         #!/bin/bash 
+         wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
+         apt-get install unzip >> tmp/log
+         unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
+         sh /tmp/app/EnsimagOpenstackG7-application_structure/mdb.sh >> tmp/log
+  DBStore:
+     type: "OS::Cinder::Volume"
+     properties:
+        size: 1
+  volume_attachment:
+     type: "OS::Cinder::VolumeAttachment"
+     properties:
+        volume_id: { get_resource: DBStore }
+        instance_uuid: { get_resource: compute_instance }
+
+outputs:
+   serviceI_IP:
+      value: {get_attr: [ compute_instance, first_address ] }
