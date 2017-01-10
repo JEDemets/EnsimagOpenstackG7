@@ -1,6 +1,6 @@
 #!/bin/bash
-echo "server_id        " $1 >> /etc/hosts
-echo "serveur_worker   " $2 >> /etc/hosts
-echo "serveur_status   " $3 >> /etc/hosts
-echo "serveur_picture  " $4 >> /etc/hosts
+echo $1 "	server_id"  >> /etc/hosts
+echo $2 "	serveur_worker"  >> /etc/hosts
+echo $3 "	serveur_status" >> /etc/hosts
+echo $4 "	serveur_picture">> /etc/hosts
 
