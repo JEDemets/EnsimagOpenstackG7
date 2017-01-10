@@ -18,7 +18,7 @@ function sendHttpGet() {
     alert("Insert Valid User ID")
   } else {
     //substitute with service call the location
-    location.href = location.href + "?userid=" + userid;
+    location.href = location.href.split("?")[0] + "?userid=" + userid;
   }
 
 }
@@ -61,11 +61,23 @@ if(!isset($_GET['userid'])){
   //IDENTIFICATION service
   $user_id = $_GET['userid'];
 
-  if (!isset($_GET('name'))){
-    header("location: server_id/");
+  if (!isset($_GET['name'])){
+    $new_url = "server_id/index.php?";
+    $first = 0;
+    foreach ($_GET as $key => $value) {
+      if ($first==0){
+        $new_url = $new_url . $key . "=" . $value;
+        $first = 1;
+      } else {
+        $new_url = $new_url . "&" .  $key . "=" . $value;
+      }
+     }
+
+     header("location: ".$new_url);
+     exit;
   } else {
 
-    if ($_GET('name')=="error_code" && $_GET('surname') =="error_code"){
+    if ($_GET['name']=="error_code" && $_GET['surname'] == "error_code"){
       echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
     } else {
       echo "<h3 align='center'>[ID] - Welcome/Bienvenue/Benvenuto  " . $_GET['name'] . " " . $_GET['surname'] . "<h3>";
@@ -77,14 +89,27 @@ if(!isset($_GET['userid'])){
   //STATUS service
 
 
-  if (!isset($_GET('status'))){
-    header("location: server_status/");
+  if (!isset($_GET['status'])){
+    $new_url = "server_status/index.php?";
+    $first = 0;
+    foreach ($_GET as $key => $value) {
+      if ($first==0){
+        $new_url = $new_url . $key . "=" . $value;
+        $first = 1;
+      } else {
+        $new_url = $new_url . "&" .  $key . "=" . $value;
+      }
+     }
+
+     header("location: ".$new_url);
+     exit;
+
   } else {
-    if ($_GET('status')=="error_code"){
+    if ($_GET['status']=="error_code"){
       echo "<h3 align='center'>Le service [STATUS] ne marche pas pour l'instant, essayer plus tard.</h3>";
-    } else if ($_GET('status')=="not_found"){
+    } else if ($_GET['status']=="not_found"){
       echo "<h3 align='center'>Le service [STATUS] n'a pas trouvé cette id.</h3>";
-    } else if ($_GET('status')=="played") {
+    } else if ($_GET['status']=="played") {
       echo "<h3 align='center'>[STATUS] Deja joué. </h3>";
     } else {
       echo "<div align=center><button onclick='playTheGame()' type='button' align=center>[STATUS] Get my Gift</button></div>";
@@ -94,16 +119,29 @@ if(!isset($_GET['userid'])){
 
 
   //PICTURE service
-  if($_GET['picture']=="error_code"){
-    echo "<h3 align='center'>Le service [PIC] ne marche pas pour l'instant, essayer plus tard </h3>";
-  }else {
-    if($status == true){
-      echo "<h3 align='center'>This is your gift: \r\n<h3>";
-      display_picture($user_id);
-    }else if ($status == false) {
-      echo "<h3 align='center'>Play your game to display your gift<h3>";
+  if (!isset($_GET['picture'])){
+    $new_url = "server_picture/index.php?";
+    $first = 0;
+    foreach ($_GET as $key => $value) {
+      if ($first==0){
+        $new_url = $new_url . $key . "=" . $value;
+        $first = 1;
+      } else {
+        $new_url = $new_url . "&" .  $key . "=" . $value;
+      }
+     }
+
+     header("location: ".$new_url);
+     exit;
+
+  } else {
+    if($_GET['picture']=="error_code"){
+      echo "<h3 align='center'>Le service [PIC] ne marche pas pour l'instant, essayer plus tard </h3>";
+    }else {
+      echo "<h3 align='center'>C'est ton cadeau: </h3>";
     }
   }
+
 
   echo "<hr>";
 

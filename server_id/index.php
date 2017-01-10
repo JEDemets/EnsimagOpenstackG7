@@ -8,17 +8,57 @@
 	$connection_id = connectDB();
 
 	if(!$connection_id){
-		header("location: server_main/index.php?userid?".$user_id."&name=error_code&surname=error_code");
+		$new_url = $_SERVER['HTTP_REFERER'] . "?";
+		$first = 0;
+		foreach ($_GET as $key => $value) {
+			if ($first==0){
+				$new_url = $new_url . $key . "=" . $value;
+				$first = 1;
+			} else {
+				$new_url = $new_url . "&" .  $key . "=" . $value;
+			}
+		 }
+
+		 $new_url = $new_url . "&name=error_code&surname=error_code" ;
+		 header("location: ".$new_url);
+		 exit;
 	} else {
 
 		$result = mysqli_query($connection_id, $namequery);
 		if (!$result) {
-				header("location: server_main/index.php?userid?".$user_id."&name=error_code&surname=error_code");
+			$new_url = $_SERVER['HTTP_REFERER'] . "?";
+			$first = 0;
+			foreach ($_GET as $key => $value) {
+				if ($first==0){
+					$new_url = $new_url . $key . "=" . $value;
+					$first = 1;
+				} else {
+					$new_url = $new_url . "&" .  $key . "=" . $value;
+				}
+			 }
+
+			 $new_url = $new_url . "&name=error_code&surname=error_code";
+			 header("location: ".$new_url);
+			 exit;
 				//echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
 	  } else {
 			$row = mysqli_fetch_row($result);
 	    //echo "<h3 align='center'>[ID] - Welcome/Bienvenue/Benvenuto  " . $row[0] . " " . $row[1] . "<h3>";
-			header("location: server_main/index.php?userid?".$user_id."&name=".$row[0]."&surname?".$row[1]);
+
+			$new_url = $_SERVER['HTTP_REFERER'] . "?";
+	    $first = 0;
+	    foreach ($_GET as $key => $value) {
+	      if ($first==0){
+	        $new_url = $new_url . $key . "=" . $value;
+	        $first = 1;
+	      } else {
+	        $new_url = $new_url . "&" .  $key . "=" . $value;
+	      }
+	     }
+
+			 $new_url = $new_url . "&name=".$row[0]."&surname=".$row[1];
+	     header("location: ".$new_url);
+	     exit;
 	  }
 	}
 

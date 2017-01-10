@@ -6,8 +6,9 @@
 
   if(!$connection_status){
     //header("location: ./error_db_page.php")
-    $new_url = "server_main/index.php?";
+    $new_url = $_SERVER['HTTP_REFERER'] . "?";
     $first = 0;
+
     foreach ($_GET as $key => $value) {
       if ($first==0){
         $new_url = $new_url . $key . "=" . $value;
@@ -30,7 +31,7 @@
     $result = mysqli_query($connection_status, $statusquery);
 
     if (!$result) {
-      $new_url = "server_main/index.php?";
+      $new_url = $_SERVER['HTTP_REFERER'] . "?";
       $first = 0;
       foreach ($_GET as $key => $value) {
         if ($first==0){
@@ -47,7 +48,7 @@
     } else {
   		$row = mysqli_fetch_row($result);
       if ($row[0]==""){
-        $new_url = "server_main/index.php?";
+        $new_url = $_SERVER['HTTP_REFERER'] . "?";
         $first = 0;
         foreach ($_GET as $key => $value) {
           if ($first==0){
@@ -62,7 +63,7 @@
         exit;
       } else {
 
-        $new_url = "server_main/index.php?";
+        $new_url = $_SERVER['HTTP_REFERER'] . "?";
         $first = 0;
         foreach ($_GET as $key => $value) {
           if ($first==0){
@@ -84,6 +85,4 @@
       }
     }
   }
-
-}
 ?>

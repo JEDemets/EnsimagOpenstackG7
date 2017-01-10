@@ -6,7 +6,7 @@ include("connect_imagedb_script.php");
 
   if (!$conn){
 
-    $new_url = "server_main/index.php?";
+    $new_url = $_SERVER['HTTP_REFERER'] . "?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
@@ -24,7 +24,7 @@ include("connect_imagedb_script.php");
     //echo "<h3 align='center'>Le service [P] ne marche pas pour l'instant, essayer plus tard </h3>";
   } else {
 
-    $new_url = "server_main/index.php?";
+    $new_url = $_SERVER['HTTP_REFERER'] . "?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
