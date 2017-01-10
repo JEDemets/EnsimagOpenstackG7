@@ -11,8 +11,6 @@ function connectDB(){
   // Check connection
   return $conn;
 
-
-
 }
 
 ?>
