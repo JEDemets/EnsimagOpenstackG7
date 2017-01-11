@@ -30,4 +30,9 @@ sudo -rm /etc/mysql/my.cnf
 sudo cp -rap ./my.cnf  /etc/mysql/
 
 sudo service mysqld start
+
+#Load DB
+scp ./prestashop_fullcustomer.dump.sql ubuntu@10.11.50.109:/home/ubuntu
+sudo mysql db < ./prestashop_fullcustomer.dump.sql
+
 exit
