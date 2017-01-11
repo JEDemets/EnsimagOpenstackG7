@@ -6,7 +6,7 @@ resources:
     properties:
       flavor: m1.small
       image: debian8 
-      name: serveurI
+      name: serveurW
       networks:
           - network: private_network_1
       key_name: id-rsa
