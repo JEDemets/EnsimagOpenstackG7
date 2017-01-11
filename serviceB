@@ -1,0 +1,40 @@
+heat_template_version: 2014-10-16
+
+parameters:
+  serveurW:
+     type: string
+     default: 127.0.0.1
+  dbserver:
+     type: string
+     default: 127.0.0.1
+  serveurP:
+     type: string
+     default: 127.0.0.1
+
+resources:
+  compute_instance: # You can name this whatever you prefer
+    type: "OS::Nova::Server"
+    properties:
+      flavor: m1.small
+      image: debian8 
+      name: service_button
+      networks:
+          - network: private_network_1
+      key_name: id-rsa
+      user_data:
+         str_replace:
+          template: |
+            #!/bin/bash 
+            wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
+            apt-get install unzip >> tmp/log
+            unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/button.sh $serveurW$ $serveurP$ $dbserver$ >> tmp/log
+          params:
+            $serveurW$: { get_param: serveurW }
+            $dbserver$: { get_param: dbserver }
+            $serveurP$: { get_param: serveurP }
+
+
+outputs:
+   buttonIP:
+      value: {get_attr: [ compute_instance, first_address ] }

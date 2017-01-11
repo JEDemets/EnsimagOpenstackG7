@@ -1,0 +1,32 @@
+heat_template_version: 2014-10-16
+
+parameters:
+  dbserver:
+     type: string
+     default: 127.0.0.1
+
+resources:
+  compute_instance: # You can name this whatever you prefer
+    type: "OS::Nova::Server"
+    properties:
+      flavor: m1.small
+      image: debian8 
+      name: service_status
+      networks:
+          - network: private_network_1
+      key_name: id-rsa
+      user_data:
+         str_replace:
+          template: |
+            #!/bin/bash 
+            wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
+            apt-get install unzip >> tmp/log
+            unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/status.sh $dbserver$ >> tmp/log
+          params:
+            $dbserver$: { get_param: dbserver }
+
+
+outputs:
+   statusIP:
+      value: {get_attr: [ compute_instance, first_address ] }
