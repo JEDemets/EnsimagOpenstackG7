@@ -25,7 +25,7 @@ function sendHttpGet() {
 
 function playTheGame(){
   var second_part = location.href.split("?")[1];
-  location.href = "server_worker/index.php?" + second_part;
+  location.href = "../server_worker/index.php?" + second_part;
 }
 
 function getUrlVars() {
@@ -62,7 +62,7 @@ if(!isset($_GET['userid'])){
   $user_id = $_GET['userid'];
 
   if (!isset($_GET['name'])){
-    $new_url = "server_id/index.php?";
+    $new_url = "../server_id/index.php?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
@@ -90,7 +90,7 @@ if(!isset($_GET['userid'])){
 
 
   if (!isset($_GET['status'])){
-    $new_url = "server_status/index.php?";
+    $new_url = "../server_status/index.php?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
@@ -118,30 +118,29 @@ if(!isset($_GET['userid'])){
   echo "<hr>";
 
 
-  //PICTURE service
-  if (!isset($_GET['picture'])){
-    $new_url = "server_picture/index.php?";
-    $first = 0;
-    foreach ($_GET as $key => $value) {
-      if ($first==0){
-        $new_url = $new_url . $key . "=" . $value;
-        $first = 1;
-      } else {
-        $new_url = $new_url . "&" .  $key . "=" . $value;
-      }
-     }
+  //PICTURE service retrieve image!
+  if (isset($_GET['status']) && $_GET['status']=='played'){
+    //retrieve image
+    echo "<h3 align='center'>C'est ton cadeau: </h3>";
 
-     header("location: ".$new_url);
-     exit;
+    $curl = curl_init("server_picture/".$user_id.".jpg");
+    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_setopt($curl, CURLOPT_HEADER, false);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
 
-  } else {
-    if($_GET['picture']=="error_code"){
-      echo "<h3 align='center'>Le service [PIC] ne marche pas pour l'instant, essayer plus tard </h3>";
-    }else {
-      echo "<h3 align='center'>C'est ton cadeau: </h3>";
+    // Make the REST call, returning the result
+    $response = curl_exec($curl);
+    if (!$response) {
+        echo "<h3 align='center'>Le service [PIC] ne marche pas pour l'instant, essayer plus tard </h3>";
+    } else {
+      print "<img src=\"$reponse\"" ;
     }
-  }
 
+  } else if ( isset($_GET['status']) && ($_GET['status'] == 'not_played') )
+    echo "<h3 align='center'>Jouer pour obtenir le cadeau</h3>";
+  else
+    $new_url = "../server_main/index.php";
 
   echo "<hr>";
 
