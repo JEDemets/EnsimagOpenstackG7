@@ -28,6 +28,10 @@ function playTheGame(){
   location.href = "../server_button/index.php?" + second_part;
 }
 
+function returnHome() {
+    location.href = "../server_main/index.php";
+}
+
 function getUrlVars() {
   var vars = {};
   var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
@@ -157,8 +161,13 @@ if(!isset($_GET['userid'])){
 
   echo "<hr>";
 
+  if (isset($_GET)){
+    echo "<div align=center><button onclick='returnHome()' type='button' align=center> HOME </button></div>";
+  }
 
 }
+
+
 
 ?>
 

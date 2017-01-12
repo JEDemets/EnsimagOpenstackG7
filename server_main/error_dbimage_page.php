@@ -9,7 +9,7 @@
 <script>
 
 function returnHome() {
-    location.href = "./index.php";
+    location.href = "../server_main/index.php";
 }
 
 </script>
