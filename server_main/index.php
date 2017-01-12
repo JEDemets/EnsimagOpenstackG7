@@ -83,6 +83,8 @@ if(!isset($_GET['userid'])){
 
     if ($_GET['name']=="error_code" && $_GET['surname'] == "error_code"){
       echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
+    } else if ($_GET['name']=="not_found" && $_GET['surname'] == "not_found") {
+      echo "<h3 align='center'>[ID] Utilisateur non trouvé<h3>";
     } else {
       echo "<h3 align='center'>[ID] - Welcome/Bienvenue/Benvenuto  " . $_GET['name'] . " " . $_GET['surname'] . "<h3>";
     }

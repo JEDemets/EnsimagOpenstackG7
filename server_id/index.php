@@ -56,7 +56,12 @@
 	      }
 	     }
 
-			 $new_url = $new_url . "&name=".$row[0]."&surname=".$row[1];
+			 if($row[0]==""){
+				 $new_url = $new_url . "&name=not_found&surname=not_found";
+			 }else{
+				 $new_url = $new_url . "&name=".$row[0]."&surname=".$row[1];
+			 }
+
 	     header("location: ".$new_url);
 	     exit;
 	  }
