@@ -25,7 +25,7 @@ function sendHttpGet() {
 
 function playTheGame(){
   var second_part = location.href.split("?")[1];
-  location.href = "../server_worker/index.php?" + second_part;
+  location.href = "../server_button/index.php?" + second_part;
 }
 
 function getUrlVars() {
@@ -119,28 +119,41 @@ if(!isset($_GET['userid'])){
 
 
   //PICTURE service retrieve image!
-  if (isset($_GET['status']) && $_GET['status']=='played'){
+  if (isset($_GET['status']) && $_GET['status']=='played' && !isset($_GET['picture'])){
     //retrieve image
-    echo "<h3 align='center'>C'est ton cadeau: </h3>";
 
-    $curl = curl_init("server_picture/".$user_id.".jpg");
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
+    $new_url = "../server_picture/index.php?";
+    $first = 0;
+    foreach ($_GET as $key => $value) {
+      if ($first==0){
+        $new_url = $new_url . $key . "=" . $value;
+        $first = 1;
+      } else {
+        $new_url = $new_url . "&" .  $key . "=" . $value;
+      }
+     }
+
+     header("location: ".$new_url);
+     exit;
 
     // Make the REST call, returning the result
-    $response = curl_exec($curl);
-    if (!$response) {
-        echo "<h3 align='center'>Le service [PIC] ne marche pas pour l'instant, essayer plus tard </h3>";
+
+
+  } else if (isset($_GET['status']) && $_GET['status']=='played' && isset($_GET['picture'])){
+
+    if ($_GET['picture']=="error_code"){
+      echo "<h3 align='center'>[PIC] Erreur dans la récupération de l'image</h3>";
     } else {
-      print "<img src=\"$reponse\"" ;
+      $json_image = $_GET['image'];
+      $image = base64_decode($image_array['img']);
+      echo $image;
     }
+
 
   } else if ( isset($_GET['status']) && ($_GET['status'] == 'not_played') )
     echo "<h3 align='center'>Jouer pour obtenir le cadeau</h3>";
   else
-    $new_url = "../server_main/index.php";
+    echo "<h3 align='center'>[STATUS] Il faut s'identifier</h3>";
 
   echo "<hr>";
 

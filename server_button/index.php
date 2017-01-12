@@ -29,20 +29,19 @@ if(!$connection_status){
   }
 
   $answer = file_get_contents("server_worker/play".$user_id);
-  $image_array = json_decode($answer);
-
   /*
   img: base64 json image
   price: name of the price
   */
-
-  $image = base64_decode($image_array['img']);
+  //$image_array = json_decode($answer);
+  //$image = base64_decode($image_array['img']);
 
   $curl = curl_init("server_picture/".$user_id.".jpg");
   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
   curl_setopt($curl, CURLOPT_HEADER, false);
   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
+  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+  curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($answer));
 
   // Make the REST call, returning the result
   $response = curl_exec($curl);

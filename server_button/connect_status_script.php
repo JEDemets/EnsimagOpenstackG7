@@ -1,10 +1,10 @@
 <?php
 
 function connectDB(){
-  $servername = "localhost";
+  $servername = "localhost"; //dbserver
   $username = "root";
-  $password = "";
-  $dbname = "openstack";
+  $password = ""; //groupe7
+  $dbname = "openstack"; //db
 
   // Create connection
   $conn = @mysqli_connect($servername, $username, $password, $dbname);

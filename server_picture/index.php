@@ -1,42 +1,34 @@
 <?php
-include("connect_imagedb_script.php");
 
-  //retrieve picture for user in DB and display it
-  $conn = connectImageDB();
+$user_id = $_GET['userid'];
 
-  if (!$conn){
+$curl = curl_init("server_picture/".$user_id.".jpg");
+curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
+curl_setopt($curl, CURLOPT_HEADER, false);
+curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
 
-    $new_url = $_SERVER['HTTP_REFERER'] . "?";
-    $first = 0;
-    foreach ($_GET as $key => $value) {
-      if ($first==0){
-        $new_url = $new_url . $key . "=" . $value;
-        $first = 1;
-      } else {
-        $new_url = $new_url . "&" .  $key . "=" . $value;
-      }
-     }
+$response = curl_exec($curl);
+if (!$response) {
+    $image_answer = "error_code";
+} else {
+  $image_array = json_decode($reponse);
+  $image_answer = $image_array['img'];
+}
 
-     $new_url = $new_url . "&picture=error_code";
-
-     header("location: ".$new_url);
-
-    //echo "<h3 align='center'>Le service [P] ne marche pas pour l'instant, essayer plus tard </h3>";
+$new_url = "../server_main/index.php?";
+$first = 0;
+foreach ($_GET as $key => $value) {
+  if ($first==0){
+    $new_url = $new_url . $key . "=" . $value;
+    $first = 1;
   } else {
-
-    $new_url = $_SERVER['HTTP_REFERER'] . "?";
-    $first = 0;
-    foreach ($_GET as $key => $value) {
-      if ($first==0){
-        $new_url = $new_url . $key . "=" . $value;
-        $first = 1;
-      } else {
-        $new_url = $new_url . "&" .  $key . "=" . $value;
-      }
-     }
-
-     $new_url = $new_url . "&picture=error_code";
-
-     header("location: ".$new_url);
-
+    $new_url = $new_url . "&" .  $key . "=" . $value;
   }
+ }
+
+ $new_url = $new_url . "&" .  "picture" . "=" . $image_answer;
+ header("location: ".$new_url);
+ exit;
+
+?>
