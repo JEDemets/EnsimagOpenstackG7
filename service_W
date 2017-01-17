@@ -8,7 +8,7 @@ resources:
       image: debian8 
       name: serveurW
       networks:
-          - network: subnet2
+          - subnet: subnet2
       key_name: id-rsa
       user_data: |
          #!/bin/bash 

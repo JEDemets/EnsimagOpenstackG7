@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $3 == "format" ]
+if [ "$3" = "format" ]
 then
 	mkfs.ext4 $1
 fi

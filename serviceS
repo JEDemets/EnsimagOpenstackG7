@@ -13,7 +13,7 @@ resources:
       image: debian8 
       name: service_status
       networks:
-          - network: subnet1
+          - subnet: subnet1
       key_name: id-rsa
       user_data:
          str_replace:
