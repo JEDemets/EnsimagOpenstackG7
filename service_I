@@ -24,7 +24,7 @@ resources:
                wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
                apt-get install unzip >> tmp/log
                unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-               sh /tmp/app/EnsimagOpenstackG7-application_structure/mountdisk.sh $dir$ /dev/disk/by-id/virtio-$volID$  $mount$ >> tmp/log
+               sh /tmp/app/EnsimagOpenstackG7-application_structure/mountdisk.sh $dir$ /dev/vdb  $mount$ >> tmp/log
                sh /tmp/app/EnsimagOpenstackG7-application_structure/MDB.sh >> /tmp/log >> tmp/log
             params:
                $dir$: { get_param: dir }
