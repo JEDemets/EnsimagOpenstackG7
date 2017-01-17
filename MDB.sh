@@ -7,7 +7,7 @@
 #sudo apt-get update
 
 #Install MariaDB
-sudo apt-get install mariadb-server
+sudo apt-get install -y mariadb-server
 sudo service mysql stop
 
 #Configure and Secure MariaDB for Use
