@@ -26,7 +26,7 @@
     //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
   } else {
     $user_id = $_GET['userid'];
-    $statusquery = "SELECT status_played FROM users WHERE id =" . $user_id;
+    $statusquery = "SELECT show_public_prices FROM ps_customer WHERE id_customer =" . $user_id;
 
     $result = mysqli_query($connection_status, $statusquery);
 

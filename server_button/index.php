@@ -18,7 +18,7 @@ if(!$connection_status){
   //INTERFACE Worker
   $user_id = $_GET['userid'];
 
-  $selectQuery = "SELECT name FROM users WHERE id=".$user_id;
+  $selectQuery = "SELECT firstname FROM ps_customer WHERE id_customer=".$user_id;
 
   $result = mysqli_query($connection_status, $selectQuery);
   $row = mysqli_fetch_row($result);
@@ -50,9 +50,9 @@ if(!$connection_status){
   }
 
 
-  $updateStatusQuery = "UPDATE users
-  SET status_played=true
-  WHERE id=" . $user_id;
+  $updateStatusQuery = "UPDATE ps_customer
+  SET show_public_prices=true
+  WHERE id_customer=" . $user_id;
 
 
   $result = mysqli_query($connection_status, $updateStatusQuery);
