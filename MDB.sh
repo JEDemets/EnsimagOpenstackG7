@@ -5,7 +5,7 @@
 #sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
 #sudo add-apt-repository 'deb http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu trusty main'
 #sudo apt-get update
-
+cd /tmp/app/EnsimagOpenstackG7-application_structure/
 #Install MariaDB
 sudo apt-get install -y mariadb-server
 sudo service mysql stop
@@ -34,5 +34,13 @@ sudo service mysqld start
 #Load DB
 scp ./prestashop_fullcustomer.dump.sql ubuntu@10.11.50.109:/home/ubuntu
 sudo mysql db < ./prestashop_fullcustomer.dump.sql
+
+
+apt-get install -y apache2
+apt-get install -y libapache2-mod-php5
+apt-get update --fix-missing
+apt-get install -y php5
+apt-get install -y php5-curl
+cp ./server_id/* /var/www/html/
 
 exit
