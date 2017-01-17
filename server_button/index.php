@@ -60,7 +60,7 @@ if(!$connection_status){
   }
 
 
-  $updateStatusQuery = "INSERT INTO ps_played ('id_customer', 'status') VALUES (".$user_id.", true)";
+  $updateStatusQuery = "INSERT INTO ps_played (id_customer, status) VALUES (".$user_id.", true)";
   $result = mysqli_query($connection_status, $updateStatusQuery);
 
   if (!$result) {
