@@ -1,0 +1,57 @@
+heat_template_version: 2014-10-16
+
+resources:
+   network:
+      type: OS::Neutron::Net
+      properties:
+         name: main_network
+   subnet1:
+      type: OS::Neutron::Subnet
+      properties:
+         name: subnet1
+         network_id: { get_resource: network }
+         ip_version: 4
+         cidr: 10.0.0.0/24
+   subnet2:
+      type: OS::Neutron::Subnet
+      properties:
+         name: subnet2
+         network_id: { get_resource: network }
+         ip_version: 4
+         cidr: 10.0.1.0/24
+   router:
+       type: OS::Neutron::Router
+       properties:
+          external_gateway_info:
+             network: external-network
+   router_interface:
+       type: OS::Neutron::RouterInterface
+       properties:
+          router_id: { get_resource: router }
+          subnet_id: { get_resource: subnet1 }
+   router_interface2:
+       type: OS::Neutron::RouterInterface
+       properties:
+          router_id: { get_resource: router }
+          subnet_id: { get_resource: subnet2 }
+   security:
+       type: OS::Neutron::SecurityGroup
+       properties:
+          name: main-sec-group
+          rules: [
+             {remote_ip_prefix: 0.0.0.0/0,
+             protocol: tcp,
+             port_range_min: 22,
+             port_range_max: 22},
+             {remote_ip_prefix: 0.0.0.0/0,
+             direction: egress,
+             protocol: tcp},
+             {remote_ip_prefix: 0.0.0.0/0,
+             protocol: tcp,
+             port_range_min: 80,
+             port_range_max: 80},
+             {remote_ip_prefix: 0.0.0.0/0,
+             protocol: tcp,
+             port_range_min: 8090,
+             port_range_max: 8090}]
+
