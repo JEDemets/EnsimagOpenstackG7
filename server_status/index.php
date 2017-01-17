@@ -26,7 +26,7 @@
     //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
   } else {
     $user_id = $_GET['userid'];
-    $statusquery = "SELECT show_public_prices FROM ps_customer WHERE id_customer =" . $user_id;
+    $statusquery = "SELECT status FROM ps_played WHERE id_customer =" . $user_id;
 
     $result = mysqli_query($connection_status, $statusquery);
 
@@ -46,21 +46,53 @@
        exit;
       //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard.</h3>";
     } else {
+
   		$row = mysqli_fetch_row($result);
       if ($row[0]==""){
-        $new_url = $_SERVER['HTTP_REFERER'] . "?";
-        $first = 0;
-        foreach ($_GET as $key => $value) {
-          if ($first==0){
-            $new_url = $new_url . $key . "=" . $value;
-            $first = 1;
-          } else {
-            $new_url = $new_url . "&" .  $key . "=" . $value;
+
+        $namequery = "SELECT firstname, lastname FROM ps_customer WHERE id_customer =" . $user_id;
+        $result = mysqli_query($connection_status, $namequery);
+        $row = mysqli_fetch_row($result);
+
+        if($row[0]!=""){
+
+          $new_url = $_SERVER['HTTP_REFERER'] . "?";
+          $first = 0;
+          foreach ($_GET as $key => $value) {
+            if ($first==0){
+              $new_url = $new_url . $key . "=" . $value;
+              $first = 1;
+            } else {
+              $new_url = $new_url . "&" .  $key . "=" . $value;
+            }
+           }
+
+           $new_url = $new_url . "&status=not_played";
+
+           header("location: ".$new_url);
+           exit;
+
+ 			    }else{
+
+         $new_url = $_SERVER['HTTP_REFERER'] . "?";
+         $first = 0;
+         foreach ($_GET as $key => $value) {
+           if ($first==0){
+             $new_url = $new_url . $key . "=" . $value;
+             $first = 1;
+           } else {
+             $new_url = $new_url . "&" .  $key . "=" . $value;
+           }
           }
-         }
-         $new_url = $new_url . "&status=not_found";
-         header("location: ".$new_url);
-        exit;
+          $new_url = $new_url . "&status=not_found";
+          header("location: ".$new_url);
+         exit;
+
+ 			 }
+
+
+
+
       } else {
 
         $new_url = $_SERVER['HTTP_REFERER'] . "?";
