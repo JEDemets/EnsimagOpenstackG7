@@ -1,8 +1,8 @@
 <?php
 
 $user_id = $_GET['userid'];
-
-$curl = curl_init("server_picture/".$user_id.".jpg");
+$address_swift = file_get_contents("address.swift");
+$curl = curl_init($address_swift."/".$user_id.".jpg");
 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
 curl_setopt($curl, CURLOPT_HEADER, false);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -16,7 +16,7 @@ if (!$response) {
   $image_answer = $image_array['img'];
 }
 
-$new_url = "../server_main/index.php?";
+$new_url = $_SERVER['HTTP_REFERER'] . "?";
 $first = 0;
 foreach ($_GET as $key => $value) {
   if ($first==0){
