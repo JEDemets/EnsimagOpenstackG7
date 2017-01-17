@@ -1,4 +1,11 @@
 heat_template_version: 2014-10-16
+parameters:
+  mount:
+     type: string
+     default: format
+  dir:
+     type: string
+     default: /data
 
 resources:
   compute_instance:
@@ -8,14 +15,21 @@ resources:
       image: ubuntu1404 
       name: serveurI
       networks:
-          - network: private_network_1
+          - network: subnet1
       key_name: id-rsa
-      user_data: |
-         #!/bin/bash 
-         wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
-         apt-get install unzip >> tmp/log
-         unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-         sh /tmp/app/EnsimagOpenstackG7-application_structure/mdb.sh >> tmp/log
+      user_data: 
+         str_replace:
+            template: |
+               #!/bin/bash 
+               wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
+               apt-get install unzip >> tmp/log
+               unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
+               sh /tmp/app/EnsimagOpenstackG7-application_structure/mount.sh $dir$ /dev/disk/by-id/virtio-$volID$  $mount$
+               sh /tmp/app/EnsimagOpenstackG7-application_structure/mdb.sh >> tmp/log
+            params:
+               $dir$: { get_param: dir }
+               $mount$: { get_param: mount }
+               $volID$: { get_resource: DBStore }
   DBStore:
      type: "OS::Cinder::Volume"
      properties:

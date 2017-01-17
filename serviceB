@@ -10,6 +10,9 @@ parameters:
   serveurP:
      type: string
      default: 127.0.0.1
+  swift:
+     type: string
+     default: 127.0.0.1
 
 resources:
   compute_instance: # You can name this whatever you prefer
@@ -19,7 +22,7 @@ resources:
       image: debian8 
       name: service_button
       networks:
-          - network: private_network_1
+          - network: subnet1
       key_name: id-rsa
       user_data:
          str_replace:
@@ -28,11 +31,12 @@ resources:
             wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
             apt-get install unzip >> tmp/log
             unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-            sh /tmp/app/EnsimagOpenstackG7-application_structure/button.sh $serveurW$ $serveurP$ $dbserver$ >> tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/button.sh $serveurW$ $serveurP$ $dbserver$ $swift$ >> tmp/log
           params:
             $serveurW$: { get_param: serveurW }
             $dbserver$: { get_param: dbserver }
             $serveurP$: { get_param: serveurP }
+            $swift$ : { get_param: swift }
 
 
 outputs:

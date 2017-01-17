@@ -20,9 +20,9 @@ resources:
     properties:
       flavor: m1.small
       image: debian8 
-      name: test2
+      name: main
       networks:
-          - network: private_network_1
+          - network: subnet2
       key_name: id-rsa
       user_data:
          str_replace:

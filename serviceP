@@ -1,7 +1,7 @@
 heat_template_version: 2014-10-16
 
 parameters:
-  dbserver:
+  swift:
      type: string
      default: 127.0.0.1
 
@@ -11,7 +11,7 @@ resources:
     properties:
       flavor: m1.small
       image: debian8 
-      name: service_status
+      name: service_picture
       networks:
           - network: subnet1
       key_name: id-rsa
@@ -22,9 +22,9 @@ resources:
             wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
             apt-get install unzip >> tmp/log
             unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-            sh /tmp/app/EnsimagOpenstackG7-application_structure/status.sh $dbserver$ >> tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/picture.sh $swift$ >> tmp/log
           params:
-            $dbserver$: { get_param: dbserver }
+            $swift$: { get_param: swift }
 
 
 outputs:
