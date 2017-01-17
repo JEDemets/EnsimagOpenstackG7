@@ -2,7 +2,8 @@
 
 if(!isset($_GET['userid'])){
   $new_url = $_SERVER['HTTP_REFERER'];
-  header("location: " . $new_url . "/error_db_page.php");
+  $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
+  header("location: " . $new_url . "error_db_page.php");
   exit;
 }
 
@@ -12,7 +13,8 @@ $connection_status = connectDB();
 
 if(!$connection_status){
   $new_url = $_SERVER['HTTP_REFERER'];
-  header("location: " . $new_url . "/error_db_page.php");
+  $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
+  header("location: " . $new_url . "error_db_page.php");
   exit;
   //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
 } else {
@@ -27,7 +29,8 @@ if(!$connection_status){
 
   if ($row[0]==""){
     $new_url = $_SERVER['HTTP_REFERER'];
-    header("location: " . $new_url . "/error_not_exist.php");
+    $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
+    header("location: " . $new_url . "error_not_exist.php");
     exit;
   }
 
@@ -51,7 +54,8 @@ if(!$connection_status){
   $response = curl_exec($curl);
   if (!$response) {
     $new_url = $_SERVER['HTTP_REFERER'];
-    header("location: " . $new_url . "/error_dbimage_page.php");
+    $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
+    header("location: " . $new_url . "error_dbimage_page.php");
   }
 
 
@@ -71,7 +75,8 @@ if(!$connection_status){
     curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
 
     $new_url = $_SERVER['HTTP_REFERER'];
-    header("location: " . $new_url . "/error_db_page.php");
+    $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
+    header("location: " . $new_url . "error_db_page.php");
 
     exit;
   }

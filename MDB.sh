@@ -21,7 +21,7 @@ sudo mysql_secure_installation
 
 #Modify folder
 sudo service mysqld stop
-#sudo mkdir /data
+sudo mkdir /data/mysql
 sudo cp -rap /var/lib/mysql /data
 sudo chown mysql.mysql /data/mysql
 

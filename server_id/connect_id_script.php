@@ -3,7 +3,7 @@
 function connectDB(){
   $servername = "dbserver"; //dbserver - localhost
   $username = "root";
-  $password = ""; //groupe7 - ""
+  $password = "groupe7"; //groupe7 - ""
   $dbname = "db"; //db - test
 
   // Create connection
