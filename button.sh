@@ -10,5 +10,5 @@ echo $1 "	server_worker" >> /etc/hosts
 echo $2 "	server_picture" >> /etc/hosts
 echo $3 "	dbserver" >> /etc/hosts
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
-echo "$4" > ./server-button/address.swift
+echo "$4" > ./server_button/address.swift
 cp ./server_button/* /var/www/html/

@@ -7,5 +7,5 @@ apt-get install -y php5-curl
 rm /var/www/html/index.html
 echo $1 "	dbserver" >> /etc/hosts
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
-cp ./server-status/* /var/www/html/
+cp ./server_status/* /var/www/html/
 

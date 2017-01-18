@@ -7,4 +7,4 @@ apt-get install -y php5-curl
 rm /var/www/html/index.html
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
 echo "$1" > ./server_picture/address.swift
-cp ./server-picture/* /var/www/html/
+cp ./server_picture/* /var/www/html/
