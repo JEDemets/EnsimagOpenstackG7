@@ -1,10 +1,10 @@
 <?php
 
 function connectDB(){
-  $servername = "dbserver"; //dbserver - localhost
+  $servername = "localhost"; //dbserver - localhost
   $username = "root";
-  $password = "groupe7"; //groupe7 - ""
-  $dbname = "db"; //db - test
+  $password = ""; //groupe7 - ""
+  $dbname = "test"; //db - test
 
   // Create connection
   $conn = @mysqli_connect($servername, $username, $password, $dbname);

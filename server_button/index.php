@@ -1,9 +1,7 @@
 <?php
 
 if(!isset($_GET['userid'])){
-  $new_url = $_SERVER['HTTP_REFERER'];
-  $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
-  header("location: " . $new_url . "error_db_page.php");
+  echo "error_get_id";
   exit;
 }
 
@@ -12,9 +10,7 @@ include("connect_status_script.php");
 $connection_status = connectDB();
 
 if(!$connection_status){
-  $new_url = $_SERVER['HTTP_REFERER'];
-  $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
-  header("location: " . $new_url . "error_db_page.php");
+  echo "error_connection_status";
   exit;
   //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
 } else {
@@ -28,13 +24,23 @@ if(!$connection_status){
   $row = mysqli_fetch_row($result);
 
   if ($row[0]==""){
-    $new_url = $_SERVER['HTTP_REFERER'];
-    $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
-    header("location: " . $new_url . "error_not_exist.php");
+    echo "error_user_not_exist";
     exit;
   }
 
-  $answer = file_get_contents("server_worker/play/".$user_id);
+  //$answer = file_get_contents("server_worker/play/".$user_id);
+
+  $url_worker = "server_worker/play/" . $user_id ;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url_worker);
+  //curl_setopt($ch, CURLOPT_HEADER, TRUE);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+  $output = curl_exec($ch);
+  //$arr = json_decode($output, true);
+
+  curl_close($ch);
+
   /*
   img: base64 json image
   price: name of the price
@@ -43,22 +49,22 @@ if(!$connection_status){
   //$image = base64_decode($image_array['img']);
 
   $address_swift = file_get_contents("address.swift");
+  $address_swift = trim(preg_replace('/\s\s+/', ' ', $address_swift));
   $curl = curl_init($address_swift."/".$user_id.".jpg");
 
   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
   curl_setopt($curl, CURLOPT_HEADER, false);
   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
   curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-  curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($answer));
+  curl_setopt($curl, CURLOPT_POSTFIELDS, $output);
 
   // Make the REST call, returning the result
   $response = curl_exec($curl);
-  if (!$response) {
-    $new_url = $_SERVER['HTTP_REFERER'];
-    $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
-    header("location: " . $new_url . "error_dbimage_page.php");
-  }
 
+  if (!$response) {
+    echo "error_in_swift";
+    exit;
+  }
 
   $updateStatusQuery = "INSERT INTO ps_played (id_customer, status) VALUES (".$user_id.", true)";
   $result = mysqli_query($connection_status, $updateStatusQuery);
@@ -71,22 +77,24 @@ if(!$connection_status){
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
 
-    $new_url = $_SERVER['HTTP_REFERER'];
-    $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
-    header("location: " . $new_url . "error_db_page.php");
+    echo "error_inserting_status";
     exit;
+
   } else {
 
 
 
-    string shell_exec ( "curl -s --user 'api:key-f94069c3ff1b0faae0527d532e6a3d57' \
+    shell_exec ( "curl -s --user 'api:key-f94069c3ff1b0faae0527d532e6a3d57' \
     https://api.mailgun.net/v3/sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org/messages \
     -F from='Mailgun Sandbox <postmaster@sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org>' \
     -F to='Moreno <djlinux93@gmail.com>' \
     -F subject='Game Played' \
-    -F text='User ".$user_id." played the game '" )
+    -F text='User ".$user_id." played the game '" );
 
-    
+    echo "OK";
+    exit;
+
+
 
   }
 

@@ -5,46 +5,23 @@
   $connection_status = connectDB();
 
   if(!$connection_status){
-    //header("location: ./error_db_page.php")
-    $new_url = $_SERVER['HTTP_REFERER'] . "?";
-    $first = 0;
 
-    foreach ($_GET as $key => $value) {
-      if ($first==0){
-        $new_url = $new_url . $key . "=" . $value;
-        $first = 1;
-      } else {
-        $new_url = $new_url . "&" .  $key . "=" . $value;
-      }
+    $arr = array('status' => 'error_code',);
+    echo json_encode($arr);
+    exit;
 
-      $new_url = $new_url . "&status=error_code";
-      header("location: ".$new_url);
-      exit;
-
-     }
-
-    //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
   } else {
+
+
     $user_id = $_GET['userid'];
     $statusquery = "SELECT status FROM ps_played WHERE id_customer =" . $user_id;
 
     $result = mysqli_query($connection_status, $statusquery);
 
     if (!$result) {
-      $new_url = $_SERVER['HTTP_REFERER'] . "?";
-      $first = 0;
-      foreach ($_GET as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
-        }
-       }
-       $new_url = $new_url . "&status=error_code";
-       header("location: ".$new_url);
-       exit;
-      //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard.</h3>";
+      $arr = array('status' => 'error_code',);
+      echo json_encode($arr);
+      exit;
     } else {
 
   		$row = mysqli_fetch_row($result);
@@ -56,37 +33,15 @@
 
         if($row[0]!=""){
 
-          $new_url = $_SERVER['HTTP_REFERER'] . "?";
-          $first = 0;
-          foreach ($_GET as $key => $value) {
-            if ($first==0){
-              $new_url = $new_url . $key . "=" . $value;
-              $first = 1;
-            } else {
-              $new_url = $new_url . "&" .  $key . "=" . $value;
-            }
-           }
+          $arr = array('status' => 'not_played',);
+          echo json_encode($arr);
+          exit;
 
-           $new_url = $new_url . "&status=not_played";
+ 			  }else{
 
-           header("location: ".$new_url);
-           exit;
-
- 			    }else{
-
-         $new_url = $_SERVER['HTTP_REFERER'] . "?";
-         $first = 0;
-         foreach ($_GET as $key => $value) {
-           if ($first==0){
-             $new_url = $new_url . $key . "=" . $value;
-             $first = 1;
-           } else {
-             $new_url = $new_url . "&" .  $key . "=" . $value;
-           }
-          }
-          $new_url = $new_url . "&status=not_found";
-          header("location: ".$new_url);
-         exit;
+          $arr = array('status' => 'not_found',);
+          echo json_encode($arr);
+          exit;
 
  			 }
 
@@ -95,25 +50,15 @@
 
       } else {
 
-        $new_url = $_SERVER['HTTP_REFERER'] . "?";
-        $first = 0;
-        foreach ($_GET as $key => $value) {
-          if ($first==0){
-            $new_url = $new_url . $key . "=" . $value;
-            $first = 1;
-          } else {
-            $new_url = $new_url . "&" .  $key . "=" . $value;
-          }
-         }
-
          if($row[0]==0){
-           $new_url = $new_url . "&status=not_played";
+           $arr = array('status' => 'not_played',);
+           echo json_encode($arr);
+           exit;
          } else {
-           $new_url = $new_url . "&status=played";
+           $arr = array('status' => 'played',);
+           echo json_encode($arr);
+           exit;
          }
-
-         header("location: ".$new_url);
-         exit;
       }
     }
   }

@@ -24,7 +24,7 @@ function returnHome() {
 <br><br>
 
 <header class="w3-container w3-red" align=center>
-  <h1>Error User not Found</h1>
+  <h1>ERROR while playing game</h1>
 </header>
 
 <hr>

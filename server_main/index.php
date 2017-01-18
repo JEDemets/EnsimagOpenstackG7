@@ -25,11 +25,21 @@ function sendHttpGet() {
 
 function playTheGame(){
   var second_part = location.href.split("?")[1];
-  location.href = "server_button/index.php?" + second_part;
+  //location.href = "../server_button/index.php?" + second_part; //CHANGE
+  var xmlHttp = new XMLHttpRequest();
+  xmlHttp.open( "GET", "../server_button/index.php?" + second_part, false ); ////CHANGE false for synchronous request
+  xmlHttp.send( null );
+  alert(xmlHttp.responseText);
+  if (xmlHttp.responseText.includes("error")){
+    location.href = "./error_playing.php";
+  }else {
+    location.reload();
+  }
+
 }
 
 function returnHome() {
-    location.href = "server_main/index.php";
+    location.href = "../server_main/index.php"; //CHANGE
 }
 
 function getUrlVars() {
@@ -66,8 +76,9 @@ if(!isset($_GET['userid'])){
   $user_id = $_GET['userid'];
 
   if (!isset($_GET['name'])){
-    $new_url = "server_id/index.php?";
+    $new_url = "http://server_id/index.php?";
     $first = 0;
+
     foreach ($_GET as $key => $value) {
       if ($first==0){
         $new_url = $new_url . $key . "=" . $value;
@@ -77,8 +88,42 @@ if(!isset($_GET['userid'])){
       }
      }
 
-     header("location: ".$new_url);
+
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $new_url);
+     //curl_setopt($ch, CURLOPT_HEADER, TRUE);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+     curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+     $output = curl_exec($ch);
+     $arr = json_decode($output, true);
+
+     curl_close($ch);
+
+     $new_url = $_SERVER['PHP_SELF'] . "?";
+
+     foreach ($_GET as $key => $value) {
+       if ($first==0){
+         $new_url = $new_url . $key . "=" . $value;
+         $first = 1;
+       } else {
+         $new_url = $new_url . "&" .  $key . "=" . $value;
+       }
+      }
+
+      foreach ($arr as $key => $value) {
+        if ($first==0){
+          $new_url = $new_url . $key . "=" . $value;
+          $first = 1;
+        } else {
+          $new_url = $new_url . "&" .  $key . "=" . $value;
+        }
+       }
+
+       header("Location: " . $new_url);
+
      exit;
+
+
   } else {
 
     if ($_GET['name']=="error_code" && $_GET['surname'] == "error_code"){
@@ -96,8 +141,10 @@ if(!isset($_GET['userid'])){
 
 
   if (!isset($_GET['status'])){
-    $new_url = "server_status/index.php?";
+
+    $new_url = "http://server_status/index.php?";
     $first = 0;
+
     foreach ($_GET as $key => $value) {
       if ($first==0){
         $new_url = $new_url . $key . "=" . $value;
@@ -107,7 +154,38 @@ if(!isset($_GET['userid'])){
       }
      }
 
-     header("location: ".$new_url);
+
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $new_url);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+     curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+     $output = curl_exec($ch);
+     $arr = json_decode($output, true);
+
+     curl_close($ch);
+
+     $new_url = $_SERVER['PHP_SELF'] . "?";
+
+     foreach ($_GET as $key => $value) {
+       if ($first==0){
+         $new_url = $new_url . $key . "=" . $value;
+         $first = 1;
+       } else {
+         $new_url = $new_url . "&" .  $key . "=" . $value;
+       }
+      }
+
+      foreach ($arr as $key => $value) {
+        if ($first==0){
+          $new_url = $new_url . $key . "=" . $value;
+          $first = 1;
+        } else {
+          $new_url = $new_url . "&" .  $key . "=" . $value;
+        }
+       }
+
+       header("Location: " . $new_url);
+
      exit;
 
   } else {
@@ -124,12 +202,11 @@ if(!isset($_GET['userid'])){
   echo "<hr>";
 
 
-  //PICTURE service retrieve image!
   if (isset($_GET['status']) && $_GET['status']=='played' && !isset($_GET['picture'])){
-    //retrieve image
 
-    $new_url = "server_picture/index.php?";
+    $new_url = "http://server_picture/index.php?";
     $first = 0;
+
     foreach ($_GET as $key => $value) {
       if ($first==0){
         $new_url = $new_url . $key . "=" . $value;
@@ -139,10 +216,38 @@ if(!isset($_GET['userid'])){
       }
      }
 
-     header("location: ".$new_url);
-     exit;
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $new_url);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+     curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+     $output = curl_exec($ch);
+     $arr = json_decode($output, true);
 
-    // Make the REST call, returning the result
+     curl_close($ch);
+
+     $new_url = $_SERVER['PHP_SELF'] . "?";
+
+     foreach ($_GET as $key => $value) {
+       if ($first==0){
+         $new_url = $new_url . $key . "=" . $value;
+         $first = 1;
+       } else {
+         $new_url = $new_url . "&" .  $key . "=" . $value;
+       }
+      }
+
+      foreach ($arr as $key => $value) {
+        if ($first==0){
+          $new_url = $new_url . $key . "=" . $value;
+          $first = 1;
+        } else {
+          $new_url = $new_url . "&" .  $key . "=" . $value;
+        }
+       }
+
+       header("Location: " . $new_url);
+
+     exit;
 
 
   } else if (isset($_GET['status']) && $_GET['status']=='played' && isset($_GET['picture'])){
@@ -150,8 +255,8 @@ if(!isset($_GET['userid'])){
     if ($_GET['picture']=="error_code"){
       echo "<h3 align='center'>[PIC] Erreur dans la récupération de l'image</h3>";
     } else {
-      $json_image = $_GET['image'];
-      $image = base64_decode($image_array['img']);
+      $json_image = $_GET['picture'];
+      $image = base64_decode($json_image);
       echo $image;
     }
 
@@ -165,6 +270,7 @@ if(!isset($_GET['userid'])){
 
   if (isset($_GET)){
     echo "<div align=center><button onclick='returnHome()' type='button' align=center> HOME </button></div>";
+    exit;
   }
 
 }
