@@ -59,6 +59,8 @@ function getUrlVars() {
   <h1>Play your Game</h1>
 </header>
 <br><br>
+
+<noscript>Something will not work without Javascript activated</noscript>
 <?php
 
 
