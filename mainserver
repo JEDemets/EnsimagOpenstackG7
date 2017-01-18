@@ -22,7 +22,7 @@ resources:
       image: debian8 
       name: main
       networks:
-          - network: subnet2
+          - subnet: subnet2
       key_name: id-rsa
       user_data:
          str_replace:
