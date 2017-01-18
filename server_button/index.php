@@ -56,7 +56,7 @@ if(!$connection_status){
   if (!$response) {
     $new_url = $_SERVER['HTTP_REFERER'];
     $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
-    header("location: " . $new_url . "error_db_page.php");
+    header("location: " . $new_url . "error_dbimage_page.php");
   }
 
 
@@ -75,6 +75,19 @@ if(!$connection_status){
     $new_url = substr($new_url,0,strrpos($new_url,'index.php?'));
     header("location: " . $new_url . "error_db_page.php");
     exit;
+  } else {
+
+    /*
+
+    string shell_exec ( "curl -s --user 'api:key-f94069c3ff1b0faae0527d532e6a3d57' \
+    https://api.mailgun.net/v3/sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org/messages \
+    -F from='Mailgun Sandbox <postmaster@sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org>' \
+    -F to='Moreno <djlinux93@gmail.com>' \
+    -F subject='Game Played' \
+    -F text='User ".$user_id." played the game '" )
+
+    */
+
   }
 
 
