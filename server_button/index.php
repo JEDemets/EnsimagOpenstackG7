@@ -77,7 +77,7 @@ if(!$connection_status){
     exit;
   } else {
 
-    /*
+
 
     string shell_exec ( "curl -s --user 'api:key-f94069c3ff1b0faae0527d532e6a3d57' \
     https://api.mailgun.net/v3/sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org/messages \
@@ -86,7 +86,7 @@ if(!$connection_status){
     -F subject='Game Played' \
     -F text='User ".$user_id." played the game '" )
 
-    */
+    
 
   }
 
