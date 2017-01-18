@@ -25,11 +25,11 @@ function sendHttpGet() {
 
 function playTheGame(){
   var second_part = location.href.split("?")[1];
-  location.href = "../server_button/index.php?" + second_part;
+  location.href = "server_button/index.php?" + second_part;
 }
 
 function returnHome() {
-    location.href = "../server_main/index.php";
+    location.href = "server_main/index.php";
 }
 
 function getUrlVars() {
@@ -66,7 +66,7 @@ if(!isset($_GET['userid'])){
   $user_id = $_GET['userid'];
 
   if (!isset($_GET['name'])){
-    $new_url = "../server_id/index.php?";
+    $new_url = "server_id/index.php?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
@@ -96,7 +96,7 @@ if(!isset($_GET['userid'])){
 
 
   if (!isset($_GET['status'])){
-    $new_url = "../server_status/index.php?";
+    $new_url = "server_status/index.php?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
@@ -128,7 +128,7 @@ if(!isset($_GET['userid'])){
   if (isset($_GET['status']) && $_GET['status']=='played' && !isset($_GET['picture'])){
     //retrieve image
 
-    $new_url = "../server_picture/index.php?";
+    $new_url = "server_picture/index.php?";
     $first = 0;
     foreach ($_GET as $key => $value) {
       if ($first==0){
