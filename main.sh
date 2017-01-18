@@ -5,4 +5,5 @@ apt-get update --fix-missing
 apt-get install -y php5
 apt-get install -y php5-curl
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
+rm /var/www/html/index.html
 cp ./server-main/* /var/www/html/
