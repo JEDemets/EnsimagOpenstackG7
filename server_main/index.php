@@ -25,9 +25,8 @@ function sendHttpGet() {
 
 function playTheGame(){
   var second_part = location.href.split("?")[1];
-  //location.href = "../server_button/index.php?" + second_part; //CHANGE
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "../server_button/index.php?" + second_part, false ); ////CHANGE false for synchronous request
+  xmlHttp.open( "GET", "http://server_button/index.php?" + second_part, false ); //false for synchronous request
   xmlHttp.send( null );
   alert(xmlHttp.responseText);
   if (xmlHttp.responseText.includes("error")){
@@ -39,7 +38,7 @@ function playTheGame(){
 }
 
 function returnHome() {
-    location.href = "../server_main/index.php"; //CHANGE
+    location.href = "./index.php";
 }
 
 function getUrlVars() {
