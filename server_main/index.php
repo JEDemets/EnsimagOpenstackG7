@@ -24,9 +24,10 @@ function sendHttpGet() {
 }
 
 function playTheGame(){
+
   var second_part = location.href.split("?")[1];
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "http://server_button/index.php?" + second_part, false ); //false for synchronous request
+  xmlHttp.open( "GET", "http://localhost/script_play.php?" + second_part, false ); //false for synchronous request
   xmlHttp.send( null );
   alert(xmlHttp.responseText);
   if (xmlHttp.responseText.includes("error")){
