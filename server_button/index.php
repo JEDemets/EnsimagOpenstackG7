@@ -30,16 +30,28 @@ if(!$connection_status){
 
   //$answer = file_get_contents("server_worker/play/".$user_id);
 
-  $url_worker = "server_worker/play/" . $user_id ;
+  curl_close($ch);
+
+  $url_worker = "http://server_worker:8090/play/" . $user_id ;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url_worker);
-  //curl_setopt($ch, CURLOPT_HEADER, TRUE);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
   curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,30);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
   $output = curl_exec($ch);
   //$arr = json_decode($output, true);
-
   curl_close($ch);
+
+  if (!$output) {
+    echo $ch;
+    echo "error_in_worker";
+    exit;
+  }
+
+
 
   /*
   img: base64 json image
@@ -51,6 +63,8 @@ if(!$connection_status){
   $address_swift = file_get_contents("address.swift");
   $address_swift = trim(preg_replace('/\s\s+/', ' ', $address_swift));
   $curl = curl_init($address_swift."/".$user_id.".jpg");
+
+  //curl -X PUT -i -H “X-Auth-Token: $TOKEN” -T photo.jpg $STORAGE_URL/container1/photo.jpg
 
   curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
   curl_setopt($curl, CURLOPT_HEADER, false);

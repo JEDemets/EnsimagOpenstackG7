@@ -26,8 +26,9 @@ function sendHttpGet() {
 function playTheGame(){
 
   var second_part = location.href.split("?")[1];
+  var first_part = location.href.split("index.php")[0];
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "http://localhost/script_play.php?" + second_part, false ); //false for synchronous request
+  xmlHttp.open( "GET", first_part + "script_play.php?" + second_part, false ); //false for synchronous request
   xmlHttp.send( null );
   alert(xmlHttp.responseText);
   if (xmlHttp.responseText.includes("error")){
@@ -93,7 +94,6 @@ if(!isset($_GET['userid'])){
 
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $new_url);
-     //curl_setopt($ch, CURLOPT_HEADER, TRUE);
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
      curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
      $output = curl_exec($ch);
