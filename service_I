@@ -22,10 +22,10 @@ resources:
             template: |
                #!/bin/bash 
                wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
-               apt-get install unzip >> tmp/log
-               unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-               sh /tmp/app/EnsimagOpenstackG7-application_structure/mountdisk.sh /dev/vdb $dir$  $mount$ >> tmp/log
-               sh /tmp/app/EnsimagOpenstackG7-application_structure/MDB.sh >> /tmp/log >> tmp/log
+               apt-get install unzip >> /tmp/log
+               unzip /tmp/application_structure.zip -d /tmp/app >> /tmp/log
+               sh /tmp/app/EnsimagOpenstackG7-application_structure/mountdisk.sh /dev/vdb $dir$  $mount$ >> /tmp/log
+               sh /tmp/app/EnsimagOpenstackG7-application_structure/MDB.sh >> /tmp/log 
             params:
                $dir$: { get_param: dir }
                $mount$: { get_param: mount }

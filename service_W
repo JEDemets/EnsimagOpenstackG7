@@ -13,9 +13,9 @@ resources:
       user_data: |
          #!/bin/bash 
          wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
-         apt-get install unzip >> tmp/log
-         unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-         sh /tmp/app/EnsimagOpenstackG7-application_structure/worker.sh >> tmp/log
+         apt-get install unzip >> /tmp/log
+         unzip /tmp/application_structure.zip -d tmp/app >> /tmp/log
+         sh /tmp/app/EnsimagOpenstackG7-application_structure/worker.sh >> /tmp/log
 
 outputs:
    serviceI_IP:

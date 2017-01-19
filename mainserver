@@ -29,10 +29,10 @@ resources:
           template: |
             #!/bin/bash 
             wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
-            apt-get install unzip >> tmp/log
-            unzip /tmp/application_structure.zip -d tmp/app >> tmp/log
-            sh /tmp/app/EnsimagOpenstackG7-application_structure/host.sh $serveurI$ $serveurB$ $serveurS$ $serveurP$ >> tmp/log
-            sh /tmp/app/EnsimagOpenstackG7-application_structure/main.sh >> tmp/log
+            apt-get install unzip >> /tmp/log
+            unzip /tmp/application_structure.zip -d /tmp/app >> /tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/host.sh $serveurI$ $serveurB$ $serveurS$ $serveurP$ >> /tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/main.sh >> /tmp/log
           params:
             $serveurI$: { get_param: serveurI }
             $serveurB$: { get_param: serveurB }

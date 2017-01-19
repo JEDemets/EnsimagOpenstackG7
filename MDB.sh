@@ -41,6 +41,7 @@ apt-get install -y libapache2-mod-php5
 apt-get update --fix-missing
 apt-get install -y php5
 apt-get install -y php5-curl
+service apache2 restart
 rm /var/www/html/index.html
 cp ./server_id/* /var/www/html/
 
