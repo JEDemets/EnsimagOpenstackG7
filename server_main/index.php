@@ -111,19 +111,23 @@ if(!isset($_GET['userid'])){
        }
       }
 
-      foreach ($arr as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
+
+      if (empty($arr)){
+        $new_url = $new_url . "&name=error_code&surname=error_code";
+      }else {
+        foreach ($arr as $key => $value) {
+          if ($first==0){
+            $new_url = $new_url . $key . "=" . $value;
+            $first = 1;
+          } else {
+            $new_url = $new_url . "&" .  $key . "=" . $value;
+          }
         }
-       }
+      }
 
        header("Location: " . $new_url);
 
-     exit;
-
+       exit;
 
   } else {
 
@@ -176,14 +180,19 @@ if(!isset($_GET['userid'])){
        }
       }
 
-      foreach ($arr as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
-        }
-       }
+
+      if (empty($arr)){
+        $new_url = $new_url . "&status=error_code";
+      } else {
+        foreach ($arr as $key => $value) {
+          if ($first==0){
+            $new_url = $new_url . $key . "=" . $value;
+            $first = 1;
+          } else {
+            $new_url = $new_url . "&" .  $key . "=" . $value;
+          }
+         }
+      }
 
        header("Location: " . $new_url);
 
@@ -237,14 +246,18 @@ if(!isset($_GET['userid'])){
        }
       }
 
-      foreach ($arr as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
-        }
-       }
+      if (empty($arr)){
+        $new_url = $new_url . "&picture=error_code";
+      } else {
+        foreach ($arr as $key => $value) {
+          if ($first==0){
+            $new_url = $new_url . $key . "=" . $value;
+            $first = 1;
+          } else {
+            $new_url = $new_url . "&" .  $key . "=" . $value;
+          }
+         }
+      }
 
        header("Location: " . $new_url);
 
