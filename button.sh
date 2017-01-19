@@ -5,6 +5,7 @@ apt-get update --fix-missing
 apt-get install -y php5
 apt-get install -y php5-curl
 apt-get install -y curl
+apt-get install -y php5-mysql
 service apache2 restart
 rm /var/www/html/index.html
 echo $1 "	server_worker" >> /etc/hosts
