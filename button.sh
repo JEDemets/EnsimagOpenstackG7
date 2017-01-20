@@ -17,4 +17,5 @@ curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 composer --version
 composer require rackspace/php-opencloud
+cp -r ./vendor/* /var/www/html/vendor/
 
