@@ -13,3 +13,8 @@ echo $3 "	dbserver" >> /etc/hosts
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
 echo "$4" > ./server_button/address.swift
 cp ./server_button/* /var/www/html/
+curl -s https://getcomposer.org/installer | php
+mv composer.phar /usr/local/bin/composer
+composer --version
+composer require rackspace/php-opencloud
+
