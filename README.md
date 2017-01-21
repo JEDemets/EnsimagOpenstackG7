@@ -1,5 +1,13 @@
 # EnsimagOpenstackG7
 
+## Our Team:
+
+CAZZOLLA Danilo - email
+PLOUVIER DEMETS Jules-Eugène - email
+LA QUATRA Moreno - moreno.la-quatra@grenoble-inp.org
+NICHIFOR Cosmin - email
+
+
 ## Application
 The application start in the main -> index.php page, contacted by outside tht take in charge all the application steps.
 Starting from that page, an user can insert his user_id and it will be used to make different request to the microservices of the application. The page dinamically adapt to the different cases, retrieving info from the various microservices contacted through GET requests.
