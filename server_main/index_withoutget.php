@@ -17,7 +17,6 @@ function sendHttpGet() {
   if (verifyintjs(userid) == ""){
     alert("Insert Valid User ID")
   } else {
-    //substitute with service call the location
     location.href = location.href.split("?")[0] + "?userid=" + userid;
   }
 
@@ -73,15 +72,18 @@ if(!isset($_GET['userid'])){
   echo "<div align=center><button id='sendbutton' onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
 } else {
 
-    //RETRIEVE INFO FOR USER
+
     echo "<p align=center >Inserted id: " . $_GET['userid'] . "<p>";
     echo "<hr>";
     $user_id = $_GET['userid'];
 
 
+    /* -------------------------------
 
+    IDENTIFICATION service
 
-    //IDENTIFICATION service
+    ------------------------------- */
+
     $new_url = "http://server_id/index.php?";
     $first = 0;
 
@@ -94,7 +96,9 @@ if(!isset($_GET['userid'])){
       }
     }
 
-    //GET REQUEST SERVER_ID
+    /* -------------------------------
+    GET REQUEST IDENTIFICATION SERVICE
+    ------------------------------- */
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $new_url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -130,16 +134,12 @@ if(!isset($_GET['userid'])){
 
     echo "<hr>";
 
+    /* -------------------------------
 
+    STATUS service
 
+    ------------------------------- */
 
-
-
-
-
-
-
-    //STATUS service
     $new_url = "http://server_status/index.php?";
     $first = 0;
     foreach ($_GET as $key => $value) {
@@ -151,7 +151,10 @@ if(!isset($_GET['userid'])){
       }
      }
 
-     //GET REQUEST SERVER_ID
+     /* -------------------------------
+     GET REQUEST STATUS SERVICE
+     ------------------------------- */
+
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $new_url);
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
@@ -182,63 +185,70 @@ if(!isset($_GET['userid'])){
 
      echo "<hr>";
 
+     /* -------------------------------
 
-  if (isset($_GET['status']) && $_GET['status']=='played'){
+     PICTURE service
 
-    //PICTURE service
-    $new_url = "http://server_picture/index.php?";
-    $first = 0;
-    foreach ($_GET as $key => $value) {
-      if ($first==0){
-        $new_url = $new_url . $key . "=" . $value;
-        $first = 1;
-      } else {
-        $new_url = $new_url . "&" .  $key . "=" . $value;
-      }
-     }
+     ------------------------------- */
 
-     //GET REQUEST SERVER_PICTURE
-     $ch = curl_init();
-     curl_setopt($ch, CURLOPT_URL, $new_url);
-     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-     curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
-     $output = curl_exec($ch);
-     $arr = json_decode($output, true);
-     curl_close($ch);
+    if (isset($_GET['status']) && $_GET['status']=='played'){
 
+      $new_url = "http://server_picture/index.php?";
+      $first = 0;
+      foreach ($_GET as $key => $value) {
+        if ($first==0){
+          $new_url = $new_url . $key . "=" . $value;
+          $first = 1;
+        } else {
+          $new_url = $new_url . "&" .  $key . "=" . $value;
+        }
+       }
 
+       /* -------------------------------
+       GET REQUEST PICTURE SERVICE
+       ------------------------------- */
 
-     if (empty($arr)){
-       $_GET['picture']="error_code";
-     } else {
-       if ($_GET['picture']!=""){
+       $ch = curl_init();
+       curl_setopt($ch, CURLOPT_URL, $new_url);
+       curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+       curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+       $output = curl_exec($ch);
+       $arr = json_decode($output, true);
+       curl_close($ch);
+
+       if (empty($arr)){
          $_GET['picture']="error_code";
        } else {
-         $_GET['picture']=$arr['picture'];
+         if ($_GET['picture']!=""){
+           $_GET['picture']="error_code";
+         } else {
+           $_GET['picture']=$arr['picture'];
+         }
        }
-     }
 
-     if($_GET['picture']!="error_code"){
-       echo '<img src="data:image/gif;base64,' . $_GET['picture'] . '" />';
-     } else {
-       echo "<h3 align='center'>[PIC] Erreur dans la récupération de l'image</h3>";
-     }
-
-
-  } else if ( isset($_GET['status']) && ($_GET['status'] == 'not_played') )
-    echo "<h3 align='center'>Jouer pour obtenir le cadeau</h3>";
-  else
-    echo "<h3 align='center'>[STATUS] Il faut s'identifier</h3>";
-
-  echo "<hr>";
+       if($_GET['picture']!="error_code"){
+         echo '<img src="data:image/gif;base64,' . $_GET['picture'] . '" />';
+       } else {
+         echo "<h3 align='center'>[PIC] Erreur dans la récupération de l'image</h3>";
+       }
 
 
+    } else if ( isset($_GET['status']) && ($_GET['status'] == 'not_played') )
+      echo "<h3 align='center'>Jouer pour obtenir le cadeau</h3>";
+    else
+      echo "<h3 align='center'>[STATUS] Il faut s'identifier</h3>";
 
-  // ECHO BUTTON HOME
-  if (isset($_GET['userid'])){
-    echo "<div align=center><button onclick='returnHome()' id='button_home' type='button' align=center> HOME </button></div>";
-    exit;
-  }
+    echo "<hr>";
+
+
+
+    /* -------------------------------
+    PRINT HOME BUTTON
+    ------------------------------- */
+    if (isset($_GET['userid'])){
+      echo "<div align=center><button onclick='returnHome()' id='button_home' type='button' align=center> HOME </button></div>";
+      exit;
+    }
 
 }
 
