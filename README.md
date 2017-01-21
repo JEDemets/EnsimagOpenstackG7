@@ -9,7 +9,7 @@
 
 
 ## Application
-The application start in the main -> index.php page,contacted by outside tht take in charge all the application steps.  
+The application start in the main -> index.php page, it's contacted by outside and it take in charge all the application steps.  
 
 Starting from that page, an user can insert his user_id and it will be used to make different request to the microservices of the application. The page dinamically adapt to the different cases, retrieving info from the various microservices contacted through GET requests.
 
