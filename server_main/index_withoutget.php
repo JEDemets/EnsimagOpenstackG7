@@ -73,16 +73,15 @@ if(!isset($_GET['userid'])){
   echo "<div align=center><button id='sendbutton' onclick='sendHttpGet()' type='button' align=center>I certify this is my UserID</button></div>";
 } else {
 
-  //RETRIEVE INFO FOR USER
+    //RETRIEVE INFO FOR USER
     echo "<p align=center >Inserted id: " . $_GET['userid'] . "<p>";
     echo "<hr>";
     $user_id = $_GET['userid'];
 
 
-  //IDENTIFICATION service
 
 
-    if (!isset($_GET['name'])){
+    //IDENTIFICATION service
     $new_url = "http://server_id/index.php?";
     $first = 0;
 
@@ -98,7 +97,6 @@ if(!isset($_GET['userid'])){
     //GET REQUEST SERVER_ID
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $new_url);
-    //curl_setopt($ch, CURLOPT_HEADER, TRUE);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
     curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
     $output = curl_exec($ch);
@@ -122,12 +120,6 @@ if(!isset($_GET['userid'])){
       }
     }
 
-       header("Location: " . $new_url);
-
-       exit;
-
-  } else {
-
     if ($_GET['name']=="error_code" && $_GET['surname'] == "error_code"){
       echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
     } else if ($_GET['name']=="not_found" && $_GET['surname'] == "not_found") {
@@ -136,17 +128,20 @@ if(!isset($_GET['userid'])){
       echo "<h3 align='center'>[ID] - Welcome/Bienvenue/Benvenuto  " . $_GET['name'] . " " . $_GET['surname'] . "<h3>";
     }
 
-  }
-
-  echo "<hr>";
-  //STATUS service
+    echo "<hr>";
 
 
-  if (!isset($_GET['status'])){
 
+
+
+
+
+
+
+
+    //STATUS service
     $new_url = "http://server_status/index.php?";
     $first = 0;
-
     foreach ($_GET as $key => $value) {
       if ($first==0){
         $new_url = $new_url . $key . "=" . $value;
@@ -156,64 +151,43 @@ if(!isset($_GET['userid'])){
       }
      }
 
-
+     //GET REQUEST SERVER_ID
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $new_url);
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
      curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
      $output = curl_exec($ch);
      $arr = json_decode($output, true);
-
      curl_close($ch);
 
-     $new_url = $_SERVER['PHP_SELF'] . "?";
-	$first = 0;
-     foreach ($_GET as $key => $value) {
-       if ($first==0){
-         $new_url = $new_url . $key . "=" . $value;
-         $first = 1;
+     if (empty($arr)){
+       $_GET['status']="error_code";
+     } else {
+       if ($_GET['status']!=""){
+         $_GET['status']="error_code";
        } else {
-         $new_url = $new_url . "&" .  $key . "=" . $value;
+         $_GET['status']=$arr['status'];
        }
-      }
+     }
+
+     if ($_GET['status']=="error_code"){
+       echo "<h3 align='center'>Le service [STATUS] ne marche pas pour l'instant, essayer plus tard.</h3>";
+     } else if ($_GET['status']=="not_found"){
+       echo "<h3 align='center'>Le service [STATUS] n'a pas trouvé cette id.</h3>";
+     } else if ($_GET['status']=="played") {
+       echo "<h3 align='center'>[STATUS] Deja joué. </h3>";
+     } else {
+       echo "<div align=center><button onclick='playTheGame()' id='button_play' type='button' align=center>[STATUS] Get my Gift</button></div>";
+     }
+
+     echo "<hr>";
 
 
-      if (empty($arr)){
-        $new_url = $new_url . "&status=error_code";
-      } else {
-        foreach ($arr as $key => $value) {
-          if ($first==0){
-            $new_url = $new_url . $key . "=" . $value;
-            $first = 1;
-          } else {
-            $new_url = $new_url . "&" .  $key . "=" . $value;
-          }
-         }
-      }
+  if (isset($_GET['status']) && $_GET['status']=='played'){
 
-       header("Location: " . $new_url);
-
-     exit;
-
-  } else {
-    if ($_GET['status']=="error_code"){
-      echo "<h3 align='center'>Le service [STATUS] ne marche pas pour l'instant, essayer plus tard.</h3>";
-    } else if ($_GET['status']=="not_found"){
-      echo "<h3 align='center'>Le service [STATUS] n'a pas trouvé cette id.</h3>";
-    } else if ($_GET['status']=="played") {
-      echo "<h3 align='center'>[STATUS] Deja joué. </h3>";
-    } else {
-      echo "<div align=center><button onclick='playTheGame()' id='button_play' type='button' align=center>[STATUS] Get my Gift</button></div>";
-    }
-  }
-  echo "<hr>";
-
-
-  if (isset($_GET['status']) && $_GET['status']=='played' && !isset($_GET['picture'])){
-
+    //PICTURE service
     $new_url = "http://server_picture/index.php?";
     $first = 0;
-
     foreach ($_GET as $key => $value) {
       if ($first==0){
         $new_url = $new_url . $key . "=" . $value;
@@ -223,58 +197,32 @@ if(!isset($_GET['userid'])){
       }
      }
 
+     //GET REQUEST SERVER_PICTURE
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $new_url);
      curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
      curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
      $output = curl_exec($ch);
      $arr = json_decode($output, true);
-
-	//$data =  base64_decode($arr['picture']);
-
-	echo '<img src="data:image/gif;base64,' . $arr['picture'] . '" />';
-
-	exit;
      curl_close($ch);
 
-     $new_url = $_SERVER['PHP_SELF'] . "?";
 
-     foreach ($_GET as $key => $value) {
-       if ($first==0){
-         $new_url = $new_url . $key . "=" . $value;
-         $first = 1;
+
+     if (empty($arr)){
+       $_GET['picture']="error_code";
+     } else {
+       if ($_GET['picture']!=""){
+         $_GET['picture']="error_code";
        } else {
-         $new_url = $new_url . "&" .  $key . "=" . $value;
+         $_GET['picture']=$arr['picture'];
        }
-      }
+     }
 
-      if (empty($arr)){
-        $new_url = $new_url . "&picture=error_code";
-      } else {
-        foreach ($arr as $key => $value) {
-          if ($first==0){
-            $new_url = $new_url . $key . "=" . $value;
-            $first = 1;
-          } else {
-            $new_url = $new_url . "&" .  $key . "=" . $value;
-          }
-         }
-      }
-
-       header("Location: " . $new_url);
-
-     exit;
-
-
-  } else if (isset($_GET['status']) && $_GET['status']=='played' && isset($_GET['picture'])){
-
-    if ($_GET['picture']=="error_code"){
-      echo "<h3 align='center'>[PIC] Erreur dans la récupération de l'image</h3>";
-    } else {
-      $json_image = $_GET['picture'];
-      $image = base64_decode($json_image);
-      echo $image;
-    }
+     if($_GET['picture']!="error_code"){
+       echo '<img src="data:image/gif;base64,' . $_GET['picture'] . '" />';
+     } else {
+       echo "<h3 align='center'>[PIC] Erreur dans la récupération de l'image</h3>";
+     }
 
 
   } else if ( isset($_GET['status']) && ($_GET['status'] == 'not_played') )
@@ -284,7 +232,10 @@ if(!isset($_GET['userid'])){
 
   echo "<hr>";
 
-  if (isset($_GET)){
+
+
+  // ECHO BUTTON HOME
+  if (isset($_GET['userid'])){
     echo "<div align=center><button onclick='returnHome()' id='button_home' type='button' align=center> HOME </button></div>";
     exit;
   }
