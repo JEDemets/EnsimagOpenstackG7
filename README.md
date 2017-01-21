@@ -2,10 +2,10 @@
 
 ## Our Team:
 
-CAZZOLLA Danilo - email
-PLOUVIER DEMETS Jules-Eugène - email
-LA QUATRA Moreno - moreno.la-quatra@grenoble-inp.org
-NICHIFOR Cosmin - email
+* CAZZOLLA Danilo - email
+* PLOUVIER DEMETS Jules-Eugène - email
+* LA QUATRA Moreno - moreno.la-quatra@grenoble-inp.org
+* NICHIFOR Cosmin - email
 
 
 ## Application
