@@ -1,118 +1,98 @@
 <?php
 
-if(!isset($_GET['userid'])){
-  echo "error_get_id";
-  exit;
-}
+  require 'vendor/autoload.php';
+  use OpenCloud\OpenStack;
 
-include("connect_status_script.php");
-
-$connection_status = connectDB();
-
-if(!$connection_status){
-  echo "error_connection_status";
-  exit;
-  //echo "<h3 align='center'>Le service [ID] ne marche pas pour l'instant, essayer plus tard </h3>";
-} else {
-
-  //INTERFACE Worker
-  $user_id = $_GET['userid'];
-
-  $selectQuery = "SELECT firstname FROM ps_customer WHERE id_customer=".$user_id;
-
-  $result = mysqli_query($connection_status, $selectQuery);
-  $row = mysqli_fetch_row($result);
-
-  if ($row[0]==""){
-    echo "error_user_not_exist";
+  if(!isset($_GET['userid'])){
+    echo "error_get_id";
     exit;
   }
 
-  //$answer = file_get_contents("server_worker/play/".$user_id);
+  include("connect_status_script.php");
 
-  curl_close($ch);
+  $connection_status = connectDB();
 
-  $url_worker = "http://server_worker:8090/play/" . $user_id ;
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $url_worker);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-  curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
-
-  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,30);
-  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-
-  $output = curl_exec($ch);
-  //$arr = json_decode($output, true);
-  curl_close($ch);
-
-  if (!$output) {
-    echo $ch;
-    echo "error_in_worker";
+  if(!$connection_status){
+    echo "error_connection_status";
     exit;
-  }
-
-
-
-  /*
-  img: base64 json image
-  price: name of the price
-  */
-  //$image_array = json_decode($answer);
-  //$image = base64_decode($image_array['img']);
-
-  $address_swift = file_get_contents("address.swift");
-  $address_swift = trim(preg_replace('/\s\s+/', ' ', $address_swift));
-  $curl = curl_init($address_swift."/".$user_id.".jpg");
-
-  //curl -X PUT -i -H “X-Auth-Token: $TOKEN” -T photo.jpg $STORAGE_URL/container1/photo.jpg
-
-  curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-  curl_setopt($curl, CURLOPT_HEADER, false);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-  curl_setopt($curl, CURLOPT_POSTFIELDS, $output);
-
-  // Make the REST call, returning the result
-  $response = curl_exec($curl);
-
-  if (!$response) {
-    echo "error_in_swift";
-    exit;
-  }
-
-  $updateStatusQuery = "INSERT INTO ps_played (id_customer, status) VALUES (".$user_id.", true)";
-  $result = mysqli_query($connection_status, $updateStatusQuery);
-
-  if (!$result) {
-
-    $curl = curl_init("server_picture/".$user_id.".jpg");
-    curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
-    curl_setopt($curl, CURLOPT_HEADER, false);
-    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
-
-    echo "error_inserting_status";
-    exit;
-
   } else {
 
+    $user_id = $_GET['userid'];
+    $selectQuery = "SELECT firstname FROM ps_customer WHERE id_customer=".$user_id;
+    $result = mysqli_query($connection_status, $selectQuery);
+    $row = mysqli_fetch_row($result);
 
+    if ($row[0]==""){
+      echo "error_user_not_exist";
+      exit;
+    }
 
-    shell_exec ( "curl -s --user 'api:key-f94069c3ff1b0faae0527d532e6a3d57' \
-    https://api.mailgun.net/v3/sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org/messages \
-    -F from='Mailgun Sandbox <postmaster@sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org>' \
-    -F to='Moreno <djlinux93@gmail.com>' \
-    -F subject='Game Played' \
-    -F text='User ".$user_id." played the game '" );
+    $url_worker = "http://server_worker:8090/play/" . $user_id ;
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url_worker);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($ch, CURLOPT_VERBOSE, TRUE);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT,30);
+    curl_setopt($ch, CURLOPT_TIMEOUT,30);
+    $output = curl_exec($ch);
+    curl_close($ch);
 
-    echo "OK";
-    exit;
+    if(!$output){
+      echo "error_in_worker";
+      exit;
+    }
 
+    $address_swift = file_get_contents("address.swift");
+    $address_swift = trim(preg_replace('/\s\s+/', ' ', $address_swift));
+    $authUrl = 'http://10.11.50.26:5000/v2.0';
+  	$username = 'groupe7';
+  	$password = 'dzCr8tliSyo='; // mot de passe Horizon
+  	$tenant = 'project7';
+    $swiftUrl = 'http://10.11.50.26:8080/v1/AUTH_2db62f6fa1664823bddbf1e03d35f0b4';
+  	$serviceName = 'swift';
+  	$region = 'region1';
 
+    $client = new OpenStack($authUrl, array(
+      'username'=> $username,
+      'password'=> $password,
+      'tenantName'  => $tenant
+    )
+    );
 
-  }
+    $client->authenticate();
+    $service = $client->objectStoreService($serviceName, $region);
+  	$container = $service->getContainer('test');
 
+  	$container->uploadObject($user_id, $output);
 
+    $updateStatusQuery = "INSERT INTO ps_played (id_customer, status) VALUES (".$user_id.", true)";
+    $result = mysqli_query($connection_status, $updateStatusQuery);
+
+    if (!$result) {
+
+      $curl = curl_init("server_picture/".$user_id.".jpg");
+      curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "DELETE");
+      curl_setopt($curl, CURLOPT_HEADER, false);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
+
+      echo "error_inserting_status";
+      exit;
+
+    } else {
+
+      //SEND EMAIL WITH MAILGUN
+      shell_exec ( "curl -s --user 'api:key-f94069c3ff1b0faae0527d532e6a3d57' \
+      https://api.mailgun.net/v3/sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org/messages \
+      -F from='Mailgun Sandbox <postmaster@sandboxa37f743f990d4d989c69f315dc097fdb.mailgun.org>' \
+      -F to='Moreno <djlinux93@gmail.com>' \
+      -F subject='Game Played' \
+      -F text='User ".$user_id." played the game '" );
+
+      echo "OK";
+      exit;
+
+    }
 
 }
 
