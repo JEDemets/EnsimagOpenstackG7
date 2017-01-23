@@ -13,11 +13,11 @@ echo $2 "	server_picture" >> /etc/hosts
 echo $3 "	dbserver" >> /etc/hosts
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
 echo "$4" > ./server_button/address.swift
-echo "$5" > ./server_picture/container.name
-echo "$6" > ./server_picture/user.name
-echo "$7" > ./server_picture/pwd
-echo "$8" > ./server_picture/tenant
-echo "$9" > ./server_picture/auth.url
+echo "$5" > ./server_button/container.name
+echo "$6" > ./server_button/user.name
+echo "$7" > ./server_button/pwd
+echo "$8" > ./server_button/tenant
+echo "$9" > ./server_button/auth.url
 cp ./server_button/* /var/www/html/
 cd ~
 curl -s https://getcomposer.org/installer | php
