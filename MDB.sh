@@ -9,7 +9,7 @@ export DEBIAN_FRONTEND=noninteractive
 sudo -E apt-get -q -y install mysql-server
 
 sudo /etc/init.d/mysql stop
-
+cd /tmp/app/EnsimagOpenstackG7-application_structure/
 sudo su
 #sudo cd /var/lib/mysql
 
