@@ -2,5 +2,5 @@
 
 apt-get install -y python3 python3-flask
 apt-get install -y Imagemagick
-cd /tmp/app/EnsimagOpenstackG7-application_structure/
-./w/w.py &
+cd /tmp/app/EnsimagOpenstackG7-application_structure/w
+./w.py &
