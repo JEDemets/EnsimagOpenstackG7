@@ -2,7 +2,13 @@
 
 	include("connect_id_script.php");
 
-	$user_id = $_GET['userid'];
+	if (!isset($_GET['userid'])){
+		$arr = array('name' => 'error_code', 'surname' => 'error_code');
+		echo json_encode($arr);
+		exit;
+	} else {
+		$user_id = $_GET['userid'];
+	}
 	$namequery = "SELECT firstname, lastname FROM ps_customer WHERE id_customer =" . $user_id;
 
 	$connection_id = connectDB();

@@ -1,26 +1,63 @@
 <?php
 
-  $user_id = $_GET['userid'];
-  $address_swift = file_get_contents("address.swift");
-  $address_swift = trim(preg_replace('/\s\s+/', ' ', $address_swift));
-  $curl = curl_init($address_swift."/".$user_id.".jpg");
-  curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "GET");
-  curl_setopt($curl, CURLOPT_HEADER, false);
-  curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: image/png'));
+    require 'vendor/autoload.php';
+    use OpenCloud\OpenStack;
 
-  $response = curl_exec($curl);
 
-  if (!$response) {
-      $image_answer = "error_code";
-  } else {
-    $image_array = json_decode($reponse);
-    $image_answer = $image_array['img'];
-  }
+    $user_id = $_GET['userid'];
+    $address_swift = file_get_contents("address.swift");
+    $address_swift = trim(preg_replace('/\s\s+/', ' ', $address_swift));
 
-  $arr = array('picture' => $image_answer,);
-  echo json_encode($arr);
-  exit;
+    $authUrl = 'http://10.11.50.26:5000/v2.0';
+    $username = 'groupe7';
+
+    /*
+
+    $password = file_get_contents("password.swift");
+    $password = trim(preg_replace('/\s\s+/', ' ', $password));
+
+    */
+
+    $password = 'dzCr8tliSyo=';
+    $tenant = 'project7';
+    $swiftUrl = 'http://10.11.50.26:8080/v1/AUTH_2db62f6fa1664823bddbf1e03d35f0b4';
+    $serviceName = 'swift';
+    $region = 'region1';
+
+    $client = new OpenStack($authUrl, array(
+        'username'=> $username,
+        'password'=> $password,
+        'tenantName'  => $tenant
+      )
+      );
+
+    $client->authenticate();
+    $service = $client->objectStoreService($serviceName, $region);
+
+    /*
+
+    $name_container = file_get_contents("namecontainer.swift");
+    $name_container = trim(preg_replace('/\s\s+/', ' ', $name_container));
+
+    */
+
+    $name_container = "test";
+    $container = $service->getContainer($name_container);
+    $object = $container->getObject($user_id);
+    $response = $object->getContent();
+    $response->rewind();
+
+    $array = json_decode($response, true);
+
+    if (!is_array($array)) {
+      $image_answer = "internal_error";
+    } else {
+      $image_answer = $array['img'];
+    }
+
+    $arr = array('picture' => $image_answer,);
+    echo json_encode($arr);
+    exit;
 
 
 ?>

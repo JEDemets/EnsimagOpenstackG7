@@ -24,17 +24,20 @@ function sendHttpGet() {
 }
 
 function playTheGame(){
+	document.getElementById("button_play").disabled = true;
+  	document.getElementById("button_home").disabled = true;
+	var firstpart = location.href.split("index.php")[0];
   var second_part = location.href.split("?")[1];
   var xmlHttp = new XMLHttpRequest();
-  xmlHttp.open( "GET", "http://server_button/index.php?" + second_part, false ); //false for synchronous request
+  xmlHttp.open( "GET", firstpart + "/script_play.php?" + second_part, false ); //false for synchronous request
   xmlHttp.send( null );
   alert(xmlHttp.responseText);
+	document.getElementById("button_home").disabled = false;
   if (xmlHttp.responseText.includes("error")){
     location.href = "./error_playing.php";
   }else {
-    location.reload();
+	location.href = "./index.php";
   }
-
 }
 
 function returnHome() {
@@ -111,19 +114,23 @@ if(!isset($_GET['userid'])){
        }
       }
 
-      foreach ($arr as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
+
+      if (empty($arr)){
+        $new_url = $new_url . "&name=error_code&surname=error_code";
+      }else {
+        foreach ($arr as $key => $value) {
+          if ($first==0){
+            $new_url = $new_url . $key . "=" . $value;
+            $first = 1;
+          } else {
+            $new_url = $new_url . "&" .  $key . "=" . $value;
+          }
         }
-       }
+      }
 
        header("Location: " . $new_url);
 
-     exit;
-
+       exit;
 
   } else {
 
@@ -166,7 +173,7 @@ if(!isset($_GET['userid'])){
      curl_close($ch);
 
      $new_url = $_SERVER['PHP_SELF'] . "?";
-
+	$first = 0;
      foreach ($_GET as $key => $value) {
        if ($first==0){
          $new_url = $new_url . $key . "=" . $value;
@@ -176,14 +183,19 @@ if(!isset($_GET['userid'])){
        }
       }
 
-      foreach ($arr as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
-        }
-       }
+
+      if (empty($arr)){
+        $new_url = $new_url . "&status=error_code";
+      } else {
+        foreach ($arr as $key => $value) {
+          if ($first==0){
+            $new_url = $new_url . $key . "=" . $value;
+            $first = 1;
+          } else {
+            $new_url = $new_url . "&" .  $key . "=" . $value;
+          }
+         }
+      }
 
        header("Location: " . $new_url);
 
@@ -197,7 +209,7 @@ if(!isset($_GET['userid'])){
     } else if ($_GET['status']=="played") {
       echo "<h3 align='center'>[STATUS] Deja joué. </h3>";
     } else {
-      echo "<div align=center><button onclick='playTheGame()' type='button' align=center>[STATUS] Get my Gift</button></div>";
+      echo "<div align=center><button onclick='playTheGame()' id='button_play' type='button' align=center>[STATUS] Get my Gift</button></div>";
     }
   }
   echo "<hr>";
@@ -224,6 +236,11 @@ if(!isset($_GET['userid'])){
      $output = curl_exec($ch);
      $arr = json_decode($output, true);
 
+	//$data =  base64_decode($arr['picture']);
+
+	echo '<img src="data:image/gif;base64,' . $arr['picture'] . '" />';
+
+	exit;
      curl_close($ch);
 
      $new_url = $_SERVER['PHP_SELF'] . "?";
@@ -237,14 +254,18 @@ if(!isset($_GET['userid'])){
        }
       }
 
-      foreach ($arr as $key => $value) {
-        if ($first==0){
-          $new_url = $new_url . $key . "=" . $value;
-          $first = 1;
-        } else {
-          $new_url = $new_url . "&" .  $key . "=" . $value;
-        }
-       }
+      if (empty($arr)){
+        $new_url = $new_url . "&picture=error_code";
+      } else {
+        foreach ($arr as $key => $value) {
+          if ($first==0){
+            $new_url = $new_url . $key . "=" . $value;
+            $first = 1;
+          } else {
+            $new_url = $new_url . "&" .  $key . "=" . $value;
+          }
+         }
+      }
 
        header("Location: " . $new_url);
 
@@ -270,7 +291,7 @@ if(!isset($_GET['userid'])){
   echo "<hr>";
 
   if (isset($_GET)){
-    echo "<div align=center><button onclick='returnHome()' type='button' align=center> HOME </button></div>";
+    echo "<div align=center><button onclick='returnHome()' id='button_home' type='button' align=center> HOME </button></div>";
     exit;
   }
 

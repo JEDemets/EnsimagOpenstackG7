@@ -1,38 +1,34 @@
 #!/bin/bash
 
-#Add the MariaDB Repository
-#sudo apt-get install software-properties-common
-#sudo apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0xcbcb082a1bb943db
-#sudo add-apt-repository 'deb http://mirror.jmu.edu/pub/mariadb/repo/5.5/ubuntu trusty main'
-#sudo apt-get update
-cd /tmp/app/EnsimagOpenstackG7-application_structure/
-#Install MariaDB
-sudo apt-get install -y mariadb-server
-sudo service mysql stop
+#Install MySQL
+sudo apt-get update
 
-#Configure and Secure MariaDB for Use
-sudo mysql_install_db
-sudo service mysql start
-sudo mysql_secure_installation
+echo "mysql-server mysql-server/root_password password " | sudo debconf-set-selections
+echo "mysql-server mysql-server/root_password_again password " | sudo debconf-set-selections
+export DEBIAN_FRONTEND=noninteractive
+sudo -E apt-get -q -y install mysql-server
 
-#Verify MariaDB Installation
-#mysql -V
-#mysql -p
+sudo /etc/init.d/mysql stop
 
-#Modify folder
-sudo service mysqld stop
-sudo mkdir /data/mysql
-sudo cp -rap /var/lib/mysql /data
-sudo chown mysql.mysql /data/mysql
+sudo su
+#sudo cd /var/lib/mysql
+
+sudo mkdir /srv/storage
+sudo mkdir /srv/storage/mysqldata
+sudo chown -R mysql.mysql /srv/storage/mysqldata
 
 
-sudo -rm /etc/mysql/my.cnf
-sudo cp -rap ./my.cnf  /etc/mysql/
+sudo cp -r /var/lib/mysql/mysql /srv/storage/mysqldata/
+sudo chown -R mysql:mysql /srv/storage/mysqldata/*
 
-sudo service mysqld start
+sudo sed -i "s/\/var\/lib\/mysql/\/srv\/storage\/mysqldata/g"  /etc/mysql/my.cnf 
+sudo sed -i "s/bind-address/#bind-address/g"  /etc/mysql/my.cnf
 
-#Load DB
-scp ./prestashop_fullcustomer.dump.sql ubuntu@10.11.50.109:/home/ubuntu
+
+#restart database daemon
+sudo /etc/init.d/mysql start
+
+sudo mysql --user=root --password=  < ./create_db.sh
 sudo mysql db < ./prestashop_fullcustomer.dump.sql
 
 

@@ -6,7 +6,7 @@
 
   if(!$connection_status){
 
-    $arr = array('status' => 'error_code',);
+    $arr = array('status' => 'error_code', 'message' => 'no connection to db');
     echo json_encode($arr);
     exit;
 
@@ -19,7 +19,7 @@
     $result = mysqli_query($connection_status, $statusquery);
 
     if (!$result) {
-      $arr = array('status' => 'error_code',);
+      $arr = array('status' => 'error_code', 'message' => 'wrong query');
       echo json_encode($arr);
       exit;
     } else {
