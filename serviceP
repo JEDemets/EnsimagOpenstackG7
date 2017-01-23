@@ -4,6 +4,16 @@ parameters:
   swift:
      type: string
      default: 127.0.0.1
+  container:
+     type: string
+  username:
+     type: string
+  password:
+     type: string
+  tenant:
+     type: string
+  auth_url:
+     type: string
 
 resources:
   compute_instance: # You can name this whatever you prefer
@@ -15,6 +25,7 @@ resources:
       networks:
           - subnet: subnet1
       key_name: id-rsa
+      security_groups: ['main-sec-group']
       user_data:
          str_replace:
           template: |
@@ -22,9 +33,14 @@ resources:
             wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
             apt-get install unzip >> /tmp/log
             unzip /tmp/application_structure.zip -d tmp/app >> /tmp/log
-            sh /tmp/app/EnsimagOpenstackG7-application_structure/picture.sh $swift$ >> /tmp/log
+            sh /tmp/app/EnsimagOpenstackG7-application_structure/picture.sh $swift$ $container$ $user $password$ $tenant$ $auth_url$ >> /tmp/log
           params:
             $swift$: { get_param: swift }
+            $container$: { get_param: container }
+            $user$: { get_param: username }
+            $password$: { get_param: password }
+            $tenant$:  { get_param: tenant }
+            $auth_url$: { get_param: auth_url }
 
 
 outputs:

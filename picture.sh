@@ -9,6 +9,11 @@ service apache2 restart
 rm /var/www/html/index.html
 cd /tmp/app/EnsimagOpenstackG7-application_structure/
 echo "$1" > ./server_picture/address.swift
+echo "$2" > ./server_picture/container.name
+echo "$3" > ./server_picture/user.name
+echo "$4" > ./server_picture/pwd
+echo "$5" > ./server_picture/tenant
+echo "$6" > ./server_picture/auth.url
 cp ./server_picture/* /var/www/html/
 curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer

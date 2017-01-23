@@ -15,6 +15,7 @@ resources:
       networks:
           - subnet: subnet1
       key_name: id-rsa
+      security_groups: ['main-sec-group']
       user_data:
          str_replace:
           template: |

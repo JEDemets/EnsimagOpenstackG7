@@ -10,6 +10,7 @@ resources:
       networks:
           - subnet: subnet2
       key_name: id-rsa
+      security_groups: ['main-sec-group']
       user_data: |
          #!/bin/bash 
          wget -P /tmp https://github.com/JEDemets/EnsimagOpenstackG7/archive/application_structure.zip > /tmp/log
