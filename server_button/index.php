@@ -48,7 +48,7 @@
   	$username = 'groupe7';
   	$password = 'dzCr8tliSyo='; // mot de passe Horizon
   	$tenant = 'project7';
-    $swiftUrl = 'http://10.11.50.26:8080/v1/AUTH_2db62f6fa1664823bddbf1e03d35f0b4';
+    $swiftUrl = file_get_contents("address.swift");
   	$serviceName = 'swift';
   	$region = 'region1';
 
