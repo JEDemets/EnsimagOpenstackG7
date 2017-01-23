@@ -19,6 +19,7 @@ echo "$7" > ./server_picture/pwd
 echo "$8" > ./server_picture/tenant
 echo "$9" > ./server_picture/auth.url
 cp ./server_button/* /var/www/html/
+cd ~
 curl -s https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 composer --version
