@@ -60,15 +60,5 @@ resources:
              protocol: tcp,
              port_range_min: 3306,
              port_range_max: 3306}]
-   key:
-      type: OS::Nova::KeyPair
-      properties:
-         name: id-rsa
-         save_private_key: True
 
-outputs:
-   publicKey:
-      value: {get_attr: [ key, public_key ] }
-   privateKey:
-      value: {get_attr: [ key, private_key ] }
 
