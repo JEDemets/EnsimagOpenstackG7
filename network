@@ -62,8 +62,9 @@ resources:
              port_range_max: 3306}]
    key:
       type: OS::Nova::KeyPair
-      name: id-rsa
-      save_private_key: True
+      properties:
+         name: id-rsa
+         save_private_key: True
 
 outputs:
    publicKey:
