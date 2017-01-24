@@ -16,6 +16,7 @@ echo "$5" > ./server_picture/tenant
 echo "$6" > ./server_picture/auth.url
 cp ./server_picture/* /var/www/html/
 cd /tmp
+export COMPOSER_HOME=/tmp
 curl -s https://getcomposer.org/installer | php -- --install-dir=/tmp
 mv composer.phar /usr/local/bin/composer
 composer --version

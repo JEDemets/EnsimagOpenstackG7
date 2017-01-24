@@ -20,6 +20,7 @@ echo "$8" > ./server_button/tenant
 echo "$9" > ./server_button/auth.url
 cp ./server_button/* /var/www/html/
 cd /tmp
+export COMPOSER_HOME=/tmp
 curl -s https://getcomposer.org/installer | php -- --install-dir=/tmp
 mv composer.phar /usr/local/bin/composer
 composer --version
