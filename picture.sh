@@ -18,8 +18,9 @@ cp ./server_picture/* /var/www/html/
 cd /tmp
 export COMPOSER_HOME=/tmp
 curl -s https://getcomposer.org/installer | php -- --install-dir=/tmp
+#mv composer.phar /usr/local/bin/composer
+php /tmp/composer.phar --version
+php /tmp/composer.phar require rackspace/php-opencloud
 mv composer.phar /usr/local/bin/composer
-composer --version
-composer require rackspace/php-opencloud
 mkdir /var/www/html/vendor/
 cp -r ./vendor/* /var/www/html/vendor/
