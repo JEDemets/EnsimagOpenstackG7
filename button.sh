@@ -19,8 +19,8 @@ echo "$7" > ./server_button/pwd
 echo "$8" > ./server_button/tenant
 echo "$9" > ./server_button/auth.url
 cp ./server_button/* /var/www/html/
-cd ~
-curl -s https://getcomposer.org/installer | php
+cd /tmp
+curl -s https://getcomposer.org/installer | php -- --install-dir=/tmp
 mv composer.phar /usr/local/bin/composer
 composer --version
 composer require rackspace/php-opencloud
