@@ -54,3 +54,7 @@ The interface with the Object Storage (Swift) has been done using the library _p
 
 The interface with MySQL server is done using the library _php-mysql_ that allow us to make all the transaction we need with the Database.
 
+##Architecture
+![image of architecture]
+(https://github.com/JEDemets/EnsimagOpenstackG7/blob/application_structure/schema.pdf)
+
