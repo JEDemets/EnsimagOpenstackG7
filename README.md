@@ -9,9 +9,10 @@
 
 
 ## Application
-The application start in the main -> index.php page, it's contacted by outside and it take in charge all the application steps.  
 
-Starting from that page, an user can insert his userID and it will be used to make different request to the microservices of the application. The page dinamically adapt to the different cases, retrieving info from the various microservices contacted through GET requests.
+The user interface with application start in the Main server, the only one accessible from internet. The application is a modular one and will interact with different services.
+
+Starting from that server page (index.php on Main Server), an user can insert his userID and it will be used to make different request to the microservices of the application. The page dinamically adapt to the different cases, retrieving info from the various microservices contacted through GET requests.
 
 * **Service Worker**
 
@@ -28,7 +29,7 @@ It's the interface between the _Main Server_ and the Worker, he does all the nec
  - Do th GET request to the Worker.
  - Update database for the status of the user.
  - Upload retrieved image in Swift
- - Answer the request with OK or error message.
+ - Answer the request with OK or error message. If OK an automatic email is sent to advice the administrator (using cURL and Mailgun Service).
  
 Also in that case we used the php-opencloud library to interact with Swift.
 
@@ -41,6 +42,13 @@ It's used to retrieve information for the user status by _Service Button_ and _S
 It's the interface between the _Main Server_ and the Database (integrated into it). He retrieve for the userID information about it as Name and Surname. 
 
 ------> ATTENTION ADD DATABASE PART
+
+
+* **Service Main**
+
+It's the main interface for the user, it's accessible from outside and it will retrieve all the information needed asking to the other servers of the applications. All the comunications between servers are stateless and use GET request. This page will act differently basing on the field userid of the get request setted or not. 
+
+NB. This page use also Javascript and could have some problem if it's disactivated.
 
 ## Used Library and Languages
 For the application, we used as primary programming language **PHP** and _php-curl_ library to make GET requests.
