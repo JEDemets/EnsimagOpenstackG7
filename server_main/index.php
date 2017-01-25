@@ -30,9 +30,10 @@ function playTheGame(){
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "GET", firstpart + "/script_play.php?" + second_part, false ); //false for synchronous request
   xmlHttp.send( null );
-  alert(xmlHttp.responseText);
+  var response_http = xmlHttp.responseText
+  alert(response_http);
 	document.getElementById("button_home").disabled = false;
-  if (xmlHttp.responseText.includes("error")){
+  if (response_http.toLowerCase().indexOf("error")>=0){
       location.href = "./error_playing.php";
   }else {
       //location.href = "./index.php";
