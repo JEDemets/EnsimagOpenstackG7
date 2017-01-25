@@ -113,12 +113,12 @@ if(!isset($_GET['userid'])){
       $_GET['name']="error_code";
       $_GET['surname']="error_code";
     } else {
-      if ($arr['name']!=""){
+      if ($arr['name']=="" !isset($arr['name'])){
         $_GET['name']="error_code";
       } else {
         $_GET['name']=$arr['name'];
       }
-      if ($arr['surname']!=""){
+      if ($arr['surname']=="" || !isset($arr['surname'])){
         $_GET['surname']="error_code";
       } else {
         $_GET['surname']=$arr['surname'];
@@ -167,7 +167,7 @@ if(!isset($_GET['userid'])){
      if (empty($arr)){
        $_GET['status']="error_code";
      } else {
-       if ($arr['status']!=""){
+       if ($arr['status']=="" || !isset($arr['status'])){
          $_GET['status']="error_code";
        } else {
          $_GET['status']=$arr['status'];
@@ -220,7 +220,7 @@ if(!isset($_GET['userid'])){
        if (empty($arr)){
          $_GET['picture']="error_code";
        } else {
-         if ($arr['picture']!=""){
+         if ($arr['picture']=="" || !isset($arr['picture']) ){
            $_GET['picture']="error_code";
          } else {
            $_GET['picture']=$arr['picture'];
