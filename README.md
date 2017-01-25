@@ -52,4 +52,5 @@ NB. This page use also Javascript and could have some problem if it's disactivat
 
 ## Used Library and Languages
 For the application, we used as primary programming language **PHP** and _php-curl_ library to make GET requests.
+
 The interface with the Object Storage (Swift) has been done using the library _php-opencloud_ (https://github.com/rackspace/php-opencloud) that make us able to create different request to swift and to achieve the authentication with the Database.
