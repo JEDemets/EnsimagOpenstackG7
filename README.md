@@ -4,7 +4,7 @@
 
 * CAZZOLLA Danilo - danilo.cazzolla@grenoble-inp.org
 * LA QUATRA Moreno - moreno.la-quatra@grenoble-inp.org
-* NICHIFOR Cosmin [Infrastructure Team] - cosmin-daniel.nichifor@grenoble-inp.org
+* NICHIFOR Cosmin - email
 * PLOUVIER DEMETS Jules-Eugène - email
 
 
@@ -16,7 +16,7 @@ Starting from that server page (index.php on Main Server), an user can insert hi
 
 * **Service Worker**
 
-This service has been given by HP team, it's basically a python script that answer to GET requests giving an image
+This service has been given by HP team, python script that answer to GET requests giving an image
 
 * **Service Picture**
 
@@ -37,12 +37,9 @@ Also in that case we used the php-opencloud library to interact with Swift.
 
 It's used to retrieve information for the user status by _Service Button_ and _Service Main_. It answer to GET request searching for the status of the setted userID
 
-* **Sevice Identification**
+* **Service Identification**
 
-It's the interface between the _Main Server_ and the Database (integrated into it). He retrieve for the userID information about it as Name and Surname. 
-
-------> ATTENTION ADD DATABASE PART
-
+It's the interface between the _Main Server_ and the Database (integrated into it). It stores and retrieves general information about users and keeps track of their activities site. Its activity data are particularly focused on checking that each user should be able to play and "get his gift" only once. Further tentatives to play again will be stopped with a message showing the gift already obtained, as the database keeps this information as well. The MySQL system relays on Debian OS 
 
 * **Service Main**
 
