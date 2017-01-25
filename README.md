@@ -39,7 +39,7 @@ It's used to retrieve information for the user status by _Service Button_ and _S
 
 * **Service Identification**
 
-It's the interface between the _Main Server_ and the Database (integrated into it). It stores and retrieves general information about users and keeps track of their activities site. Its activity data are particularly focused on checking that each user should be able to play and "get his gift" only once. Further tentatives to play again will be stopped with a message showing the gift already obtained, as the database keeps this information as well. The MySQL system relays on Debian OS 
+It's the interface between the _Main Server_ and the Database (integrated into it). It stores and retrieves general information about users and keeps track of their activities on the site. Its activity data are particularly focused on checking that each user should be able to play and "get his gift" only once. Further tentatives to play again will be stopped with a message showing the gift already obtained, as the database keeps this information as well. The MySQL system relays on Debian OS 
 
 * **Service Main**
 
