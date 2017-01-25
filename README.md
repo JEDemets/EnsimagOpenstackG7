@@ -29,6 +29,7 @@ It's the interface between the _Main Server_ and the Worker, he does all the nec
  - Update database for the status of the user.
  - Upload retrieved image in Swift
  - Answer the request with OK or error message.
+ 
 Also in that case we used the php-opencloud library to interact with Swift.
 
 * **Service Status**
