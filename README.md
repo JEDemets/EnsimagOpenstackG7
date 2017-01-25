@@ -2,7 +2,7 @@
 
 ## Our Team:
 
-* CAZZOLLA Danilo - email
+* CAZZOLLA Danilo - danilo.cazzolla@grenoble-inp.org
 * LA QUATRA Moreno - moreno.la-quatra@grenoble-inp.org
 * NICHIFOR Cosmin - email
 * PLOUVIER DEMETS Jules-Eugène - email
