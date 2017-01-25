@@ -16,7 +16,7 @@ Starting from that server page (index.php on Main Server), an user can insert hi
 
 * **Service Worker**
 
-This service has been given by HP team, python script that answer to GET requests giving an image
+This service has been given by HP team, it's basically a python script that answer to GET requests giving an image
 
 * **Service Picture**
 
