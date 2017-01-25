@@ -20,7 +20,7 @@ This service has been given by HP team, python script that answer to GET request
 
 * **Service Picture**
 
-It's the interface beetween the _Main Server_ and the Object Storage(Swift). It answer to GET request using the setted field userid. It answer with a Json array in which we can find an image or an error code if something goes wrong. In this server we used the php library php-opencloud that allow us to interact with Swift in a confortable way.
+It's the interface beetween the _Main Server_ and the Object Storage(Swift). It answer to GET request using the setted field userid. It answer with a Json array in which we can find an image or an error code if something goes wrong. In this server we used the php library _php-opencloud_ that allow us to interact with Swift in a confortable way.
 
 * **Service Button**
 
