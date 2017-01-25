@@ -35,7 +35,8 @@ function playTheGame(){
   if (xmlHttp.responseText.includes("error")){
       location.href = "./error_playing.php";
   }else {
-      location.href = "./index.php";
+      //location.href = "./index.php";
+      location.reload(true);
   }
 }
 
