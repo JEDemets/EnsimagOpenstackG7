@@ -5,7 +5,7 @@
 * CAZZOLLA Danilo - danilo.cazzolla@grenoble-inp.org
 * LA QUATRA Moreno - moreno.la-quatra@grenoble-inp.org
 * NICHIFOR Cosmin - email
-* PLOUVIER DEMETS Jules-Eugène - email
+* PLOUVIER DEMETS Jules-Eugène - jules-eugene.demets@grenoble-inp.org
 
 
 ## Application
@@ -56,5 +56,5 @@ The interface with MySQL server is done using the library _php-mysql_ that allow
 
 ##Architecture
 ![image of architecture]
-(https://github.com/JEDemets/EnsimagOpenstackG7/blob/application_structure/schema.pdf)
+(https://github.com/JEDemets/EnsimagOpenstackG7/blob/application_structure/schema.png)
 
