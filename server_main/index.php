@@ -30,15 +30,14 @@ function playTheGame(){
   var xmlHttp = new XMLHttpRequest();
   xmlHttp.open( "GET", firstpart + "/script_play.php?" + second_part, false ); //false for synchronous request
   xmlHttp.send( null );
-  var response_http = xmlHttp.responseText
+  var response_http = xmlHttp.responseText;
   alert(response_http);
-	document.getElementById("button_home").disabled = false;
+  document.getElementById("button_home").disabled = false;
   if (response_http.toLowerCase().indexOf("error")>=0){
       location.href = "./error_playing.php";
-  }else {
-      //location.href = "./index.php";
+  }else{
       location.reload(true);
-  }
+	}
 }
 
 function returnHome() {
@@ -114,7 +113,7 @@ if(!isset($_GET['userid'])){
       $_GET['name']="error_code";
       $_GET['surname']="error_code";
     } else {
-      if ($arr['name']=="" !isset($arr['name'])){
+      if ($arr['name']=="" || !isset($arr['name'])){
         $_GET['name']="error_code";
       } else {
         $_GET['name']=$arr['name'];
@@ -221,7 +220,7 @@ if(!isset($_GET['userid'])){
        if (empty($arr)){
          $_GET['picture']="error_code";
        } else {
-         if ($arr['picture']=="" || !isset($arr['picture']) ){
+         if ($arr['picture']=="" || !isset($arr['picture'])){
            $_GET['picture']="error_code";
          } else {
            $_GET['picture']=$arr['picture'];
