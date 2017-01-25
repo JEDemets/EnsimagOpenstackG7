@@ -2,8 +2,8 @@ heat_template_version: 2014-10-16
 
 parameters:
    dns:
-   type: string
-   default: 10.11.50.1
+      type: string
+      default: 10.11.50.1
 
 resources:
    network:
