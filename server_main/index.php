@@ -66,6 +66,10 @@ function getUrlVars() {
 <noscript>Something will not work without Javascript activated</noscript>
 <?php
 
+  if (strpos($_SERVER["REQUEST_URI"], 'index.php') == false) {
+    header('Location: ./index.php');
+  }
+
 
 if(!isset($_GET['userid'])){
   echo "<div align=center>Insert your id: <input type='text' name='fname' id = 'userid' onkeydown = \"if (event.keyCode == 13)
